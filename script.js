@@ -18,11 +18,8 @@ async function getERAData() {
         "https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + new Date().getFullYear() + "&limit=5000"
     );
     const data = await response.json();
-    for (const playerData of data.stats[0].splits){
-        if (i > 0 && stat[i].era > stat[i - 1].era){
-            eraRank++;
-            playerData.stat.rank = eraRank;
-        }
+    for (let i = 0; i < data.stats[0].splits.length; i++) {
+        const playerData = data.stats[0].splits[i];
     }
     if (playerData.stat.eraRank === 1){
         let changeRank1 = document.getElementById("rank1");
