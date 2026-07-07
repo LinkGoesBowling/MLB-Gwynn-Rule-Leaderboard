@@ -23,12 +23,12 @@ async function getERAData() {
         var playerData = pData.stats[0].splits[i]; //var was used for function scope
         if (playerData.stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
             const modifiedERTotal = playerData.stat.earnedRuns + (minimumInnings - playerData.stat.inningsPitched);
-            let adjustedERA = (modifiedERTotal * 9) / minimumInnings;
+            playerData[i].stat.adjustedERA = (modifiedERTotal * 9) / minimumInnings;
             /* let changeRanks = document.getElementById("rank" + (i + 1));
             changeRanks.textContent = playerData.player.fullName + ", ERA: " + adjustedERA + ", originial ERA: " + playerData.stat.era; */
         }
         if (playerData.stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
-            let adjustedERA = playerData.stat.era;
+            playerData[i].stat.adjustedERA = playerData.stat.era;
         }
         /* let changeRanks = document.getElementById("rank" + (i + 1));
         changeRanks.textContent = playerData.player.fullName + ", ERA: " + playerData.stat.era; */
@@ -37,10 +37,9 @@ async function getERAData() {
         if (i > 0 && playerData[i].stat.adjustedERA > playerData[i - 1].stat.adjustedERA){
             eraRank++;
         }
-        playerData[i].player.eraRank = eraRank;
         if (eraRank === 1){
             let changeRanks = document.getElementById("rank1");
-            changeRanks.textContent = playerData[i].player.fullName + ", ERA: " + playerData[i].stat.era;
+            changeRanks.textContent = playerData[i].player.fullName + ", ERA: " + ;
         }
     }
 }
