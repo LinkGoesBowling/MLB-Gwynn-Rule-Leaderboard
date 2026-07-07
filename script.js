@@ -21,12 +21,12 @@ async function getERAData() {
     for (const playerData of data.stats[0].splits){
         if (i > 0 && stat[i].era > stat[i - 1].era){
             eraRank++;
-            stat.rank = eraRank;
+            playerData.stat.rank = eraRank;
         }
     }
-    if stat.eraRank = 1{
+    if (playerData.stat.eraRank === 1){
         let changeRank1 = document.getElementById("rank1");
-        changeRank1.textContent = player.fullName;
+        changeRank1.textContent = playerData.player.fullName;
     }
 }
 /* function getAVGData(id){
