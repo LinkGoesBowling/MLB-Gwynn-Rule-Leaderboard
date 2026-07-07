@@ -39,6 +39,7 @@ async function getERAData(season) {
             }
             players[i].adjustedERA = adjustedERA;
             players[i].preAdjustmentERA = ", adjusted from: " + players[i].stat.era;
+            console.log(players[i].player.fullName);
         }
     }
     for (let i = 0; i < players.length; i++){ //increase rank if era is higher than other player
