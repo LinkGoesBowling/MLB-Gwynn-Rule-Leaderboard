@@ -25,8 +25,10 @@ async function getERAData() {
         if (playerData.stat.inningsPitched < minimumInnings){
             continue;
         }
-        let changeRanks = document.getElementById("rank" + (i + 1));
-        changeRanks.textContent = playerData.player.fullName + " " + playerData.stat.era;
+        if (i < 20){
+            let changeRanks = document.getElementById("rank" + (i + 1));
+            changeRanks.textContent = playerData.player.fullName + " " + playerData.stat.era;
+        }
     }
 }
 /* function getAVGData(id){
