@@ -20,12 +20,11 @@ async function getERAData(season) {
     const tData = await teamAPI.json();
     const minimumInnings = tData.stats[0].splits[0].stat.gamesPlayed; //not based on any particular team yet
     const players = pData.stats[0].splits;
-    let preAdjustmentERA = " ";
     for (let i = 0; i < players.length; i++) {
         if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
             const adjustedERA = players[i].stat.era
             players[i].adjustedERA = adjustedERA;
-            preAdjustmentERA = " ";
+            players[i].preAdjustmentERA = " ";
         }
         else if (players[i].stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
             const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
@@ -39,7 +38,7 @@ async function getERAData(season) {
                 adjustedERA[4] = 0;
             }
             players[i].adjustedERA = adjustedERA;
-            preAdjustmentERA = ", adjusted from: " + players[i].stat.era;
+            players[i].preAdjustmentERA = ", adjusted from: " + players[i].stat.era;
         }
     }
     for (let i = 0; i < players.length; i++){ //increase rank if era is higher than other player
@@ -49,83 +48,83 @@ async function getERAData(season) {
         players.sort((a, b) => a.adjustedERA - b.adjustedERA);
         if (eraRank === 1){ //modify top 20 ranks on website
             let changeRanks = document.getElementById("rank1");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 2){
             let changeRanks = document.getElementById("rank2");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 3){
             let changeRanks = document.getElementById("rank3");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 4){
             let changeRanks = document.getElementById("rank4");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 5){
             let changeRanks = document.getElementById("rank5");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 6){
             let changeRanks = document.getElementById("rank6");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 7){
             let changeRanks = document.getElementById("rank7");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 8){
             let changeRanks = document.getElementById("rank8");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 9){
             let changeRanks = document.getElementById("rank9");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 10){
             let changeRanks = document.getElementById("rank10");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 11){
             let changeRanks = document.getElementById("rank11");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 12){
             let changeRanks = document.getElementById("rank12");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 13){
             let changeRanks = document.getElementById("rank13");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 14){
             let changeRanks = document.getElementById("rank14");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 15){
             let changeRanks = document.getElementById("rank15");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 16){
             let changeRanks = document.getElementById("rank16");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 17){
             let changeRanks = document.getElementById("rank17");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 18){
             let changeRanks = document.getElementById("rank18");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 19){
             let changeRanks = document.getElementById("rank19");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         if (eraRank === 20){
             let changeRanks = document.getElementById("rank20");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
     }
 }
