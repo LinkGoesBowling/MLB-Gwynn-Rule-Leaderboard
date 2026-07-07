@@ -13,111 +13,113 @@ Rounding: Nearest thousandth (ex. .343)
 */
 let eraRank = 1;
 let avgRank = 1;
-async function getERAData() {
-    const playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + new Date().getFullYear() + "&limit=5000");
-    const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=pitching&season=" + new Date().getFullYear() + "&sportIds=1");
+async function getERAData(season) {
+    let season = new Date().getFullYear(); //current year
+    const playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
+    const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=pitching&season=" + season + "&sportIds=1");
     const pData = await playerAPI.json();
     const tData = await teamAPI.json();
     const minimumInnings = tData.stats[0].splits[0].stat.gamesPlayed; //not based on any particular team yet
     const players = pData.stats[0].splits;
+    let preAdjustedERA = " ";
     for (let i = 0; i < players.length; i++) {
-        var playerData = pData.stats[0].splits[i]; //var was used for function scope
         if (players[i].stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
             const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
-            const adjustedERA = (modifiedERTotal * 9) / minimumInnings
-            Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
+            let adjustedERA = (modifiedERTotal * 9) / minimumInnings
+            adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
             players[i].adjustedERA = adjustedERA;
+            preAdjustedERA = ", adjusted from: " + players[i].stat.era;
         }
         if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
-            const adjustedERA = players[i].stat.era
-            Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
+            let adjustedERA = players[i].stat.era
+            adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
             players[i].adjustedERA = adjustedERA;
         }
     }
-    for (let i = 0; i < players.length; i++){
+    for (let i = 0; i < players.length; i++){ //increase rank if era is higher than other player
         if (i > 0 && players[i].adjustedERA > players[i - 1].adjustedERA){
             eraRank++;
         }
         players.sort((a, b) => a.adjustedERA - b.adjustedERA);
         if (eraRank === 1){ //modify top 20 ranks on website
             let changeRanks = document.getElementById("rank1");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 2){
             let changeRanks = document.getElementById("rank2");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 3){
             let changeRanks = document.getElementById("rank3");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 4){
             let changeRanks = document.getElementById("rank4");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 5){
             let changeRanks = document.getElementById("rank5");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 6){
             let changeRanks = document.getElementById("rank6");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 7){
             let changeRanks = document.getElementById("rank7");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 8){
             let changeRanks = document.getElementById("rank8");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 9){
             let changeRanks = document.getElementById("rank9");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 10){
             let changeRanks = document.getElementById("rank10");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 11){
             let changeRanks = document.getElementById("rank11");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 12){
             let changeRanks = document.getElementById("rank12");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 13){
             let changeRanks = document.getElementById("rank13");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 14){
             let changeRanks = document.getElementById("rank14");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 15){
             let changeRanks = document.getElementById("rank15");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 16){
             let changeRanks = document.getElementById("rank16");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 17){
             let changeRanks = document.getElementById("rank17");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 18){
             let changeRanks = document.getElementById("rank18");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 19){
             let changeRanks = document.getElementById("rank19");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
         if (eraRank === 20){
             let changeRanks = document.getElementById("rank20");
-            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
         }
     }
 }
