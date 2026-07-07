@@ -18,17 +18,30 @@ async function getERAData() {
     const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=pitching&season=" + new Date().getFullYear() + "&sportIds=1");
     const pData = await playerAPI.json();
     const tData = await teamAPI.json();
+    const playerData = pData.stats[0].splits[i];
     const minimumInnings = tData.stats[0].splits[0].stat.gamesPlayed; //not based on any particular team yet
     for (let i = 0; i < 20; i++) {
-        const playerData = pData.stats[0].splits[i];
-        if (playerData.stat.inningsPitched < minimumInnings){
-            /* const modifiedERTotal = playerData.stat.earnedRuns + (minimumInnings - playerData.stat.inningsPitched);
-            const adjustedERA = (modifiedERTotal * 9) / minimumInnings;
+        if (playerData.stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
+            const modifiedERTotal = playerData.stat.earnedRuns + (minimumInnings - playerData.stat.inningsPitched);
+            let adjustedERA = (modifiedERTotal * 9) / minimumInnings;
+            /* let changeRanks = document.getElementById("rank" + (i + 1));
             changeRanks.textContent = playerData.player.fullName + ", ERA: " + adjustedERA + ", originial ERA: " + playerData.stat.era; */
-            continue;
         }
-        let changeRanks = document.getElementById("rank" + (i + 1));
-        changeRanks.textContent = playerData.player.fullName + ", ERA: " + playerData.stat.era;
+        if (playerData.stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
+            let adjustedERA = playerData.stat.era;
+        }
+        /* let changeRanks = document.getElementById("rank" + (i + 1));
+        changeRanks.textContent = playerData.player.fullName + ", ERA: " + playerData.stat.era; */
+    }
+    for (let i = 0; i < playerData.length; i++){
+        if (i > 0 && playerData[i].stat.adjustedERA > playerData[i - 1].stat.adjustedERA){
+            eraRank++;
+        }
+        playerData[i].player.eraRank = eraRank;
+        if (eraRank === 1){
+            let changeRanks = document.getElementById("rank1");
+            changeRanks.textContent = playerData.player.fullName + ", ERA: " + playerData.stat.era;
+        }
     }
 }
 async function getAvgData(){
