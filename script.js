@@ -26,7 +26,7 @@ async function getERAData() {
         if (playerData.stat.inningsPitched < minimumInnings){
             const modifiedERTotal = playerData.stat.earnedRuns + (minimumInnings - playerData.stat.inningsPitched);
             const adjustedERA = (modifiedERTotal * 9) / minimumInnings;
-            changeRanks.textContent = playerData.player.fullName + ", ERA: " + adjustedERA + ", originial ERA: " + playerData.stat.era;
+            //changeRanks.textContent = playerData.player.fullName + ", ERA: " + adjustedERA + ", originial ERA: " + playerData.stat.era;
         }
     }
 }
