@@ -26,13 +26,26 @@ async function getERAData(season) {
             const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
             let adjustedERA = (modifiedERTotal * 9) / minimumInnings
             adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
+            if (adjustedERA[3] === undefined){ //if 3rd digit is 0, add a visible 0
+                adjustedERA[3] = 0;
+            }
+            if (adjustedERA[4] === undefined){
+                adjustedERA[4] = 0;
+            }
             players[i].adjustedERA = adjustedERA;
             preAdjustmentERA = ", adjusted from: " + players[i].stat.era;
         }
         if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
             let adjustedERA = players[i].stat.era
             adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
+            if (adjustedERA[3] === undefined){ //if 3rd digit is 0, add a visible 0
+                adjustedERA[3] = 0;
+            }
+            if (adjustedERA[4] === undefined){
+                adjustedERA[4] = 0;
+            }
             players[i].adjustedERA = adjustedERA;
+            preAdjustmentERA = " ";
         }
     }
     for (let i = 0; i < players.length; i++){ //increase rank if era is higher than other player
