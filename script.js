@@ -23,23 +23,23 @@ async function getERAData() {
         var playerData = pData.stats[0].splits[i]; //var was used for function scope
         if (playerData.stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
             const modifiedERTotal = playerData.stat.earnedRuns + (minimumInnings - playerData.stat.inningsPitched);
-            playerData[i].stat.adjustedERA = (modifiedERTotal * 9) / minimumInnings;
+            playerData[i].adjustedERA = (modifiedERTotal * 9) / minimumInnings;
             /* let changeRanks = document.getElementById("rank" + (i + 1));
             changeRanks.textContent = playerData.player.fullName + ", ERA: " + adjustedERA + ", originial ERA: " + playerData.stat.era; */
         }
         if (playerData.stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
-            playerData[i].stat.adjustedERA = playerData.stat.era;
+            playerData[i].adjustedERA = playerData.stat.era;
         }
         /* let changeRanks = document.getElementById("rank" + (i + 1));
         changeRanks.textContent = playerData.player.fullName + ", ERA: " + playerData.stat.era; */
     }
     for (let i = 0; i < playerData.length; i++){
-        if (i > 0 && playerData[i].stat.adjustedERA > playerData[i - 1].stat.adjustedERA){
+        if (i > 0 && playerData[i].adjustedERA > playerData[i - 1].adjustedERA){
             eraRank++;
         }
         if (eraRank === 1){
             let changeRanks = document.getElementById("rank1");
-            changeRanks.textContent = playerData[i].player.fullName + ", ERA: " + playerData[i].stat.adjustedERA + ", adjusted from: " + playerData[i].stat.era;
+            changeRanks.textContent = playerData[i].player.fullName + ", ERA: " + playerData[i].adjustedERA + ", adjusted from: " + playerData[i].stat.era;
         }
     }
 }
