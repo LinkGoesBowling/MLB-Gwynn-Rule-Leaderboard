@@ -38,6 +38,7 @@ async function getERAData() {
         if (i > 0 && players[i].adjustedERA > players[i - 1].adjustedERA){
             eraRank++;
         }
+        players.sort((a, b) => a.adjustedERA - b.adjustedERA);
         if (eraRank === 1){
             let changeRanks = document.getElementById("rank1");
             changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
