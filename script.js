@@ -19,13 +19,20 @@ async function getERAData() {
     );
     const data = await response.json();
     for (const playerData of data.stats[0].splits){
-        console.log(playerData.player.fullName + " " + playerData.stat.era);
+        if (i > 0 && stat[i].era > stat[i - 1].era){
+            eraRank++;
+            stat.rank = eraRank;
+        }
+    }
+    if stat.eraRank = 1{
+        let changeRank1 = document.getElementById("rank1");
+        changeRank1.textContent = player.fullName;
     }
 }
 /* function getAVGData(id){
     const apiURL = fetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=' + new Date().getFullYear() + '&limit=5000');
     for (let i = 0; i < apiURL.length; i++){
-        if (i > 0 && player[i].average < player[i - 1].era){
+        if (i > 0 && stat[i].average < stat[i - 1].avg){
             avgRank++;
         }
         player[i].avgRank = avgRank;
