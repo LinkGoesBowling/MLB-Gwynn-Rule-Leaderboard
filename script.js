@@ -90,33 +90,33 @@ stat = "avg";
         const tData = await teamAPI.json();
         const players = pData.stats[0].splits;
         const teams = tData.stats[0].splits;
-        //leagues were not included in mlb's api, so i had to find them myself
-        if (teams.team.id === (119 || 134 || 115 || 137 || 146 || 120 || 144 || 138 || 112 || 143 || 109 || 121 || 113 || 135 || 173 || 155 || 123 || 132 || 195 || 124 || 150 || 224 || 199 || 187 || 208 || 299 || 297 || 213 || 196 || 129 || 220 || 126 || 209 || 166 || 148 || 221)){ //nl teams, including defunct ones
-                teams.league = "nl";
-        }
-        if (teams.team.id === 158){ //the brewers were originally an al team, but started playing in nl 1998 season
-                if (currentSeason >= 1998){
-                        teams.league = "nl";
-                }
-                if (currentSeason < 1998){
-                        teams.league = "al";
-                }
-        }
-        if (teams.team.id === 117){ //the astros switched from nl to al in 2013
-                if (currentSeason >= 2013){
-                        teams.league = "al";
-                }
-                if (currentSeason < 2013){
-                        teams.league = "nl";
-                }
-        }
-        else { //other teams are considered al, including ones from defunct leagues
-               teams.league = "al";
-        }
         for (let i = 0; i < players.length; i++) {
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA count
+                    //leagues were not included in mlb's api, so i had to find them myself
+                if (teams[j].team.id === (119 || 134 || 115 || 137 || 146 || 120 || 144 || 138 || 112 || 143 || 109 || 121 || 113 || 135 || 173 || 155 || 123 || 132 || 195 || 124 || 150 || 224 || 199 || 187 || 208 || 299 || 297 || 213 || 196 || 129 || 220 || 126 || 209 || 166 || 148 || 221)){ //nl teams, including defunct ones
+                        teams.league = "nl";
+                }
+                if (teams[j].team.id === 158){ //the brewers were originally an al team, but started playing in nl 1998 season
+                        if (currentSeason >= 1998){
+                                teams.league = "nl";
+                        }
+                        if (currentSeason < 1998){
+                                teams.league = "al";
+                        }
+                }
+                if (teams[j].team.id === 117){ //the astros switched from nl to al in 2013
+                        if (currentSeason >= 2013){
+                                teams.league = "al";
+                        }
+                        if (currentSeason < 2013){
+                                teams.league = "nl";
+                        }
+                }
+                else { //other teams are considered al, including ones from defunct leagues
+                       teams[j].league = "al";
+                }
                 if (players[i].team.id === teams[j].team.id){
-                        if ((league === "nl" && teams.league === "nl") || (league === "al" && teams.league === "al") || (league==="mlb")){
+                        if ((league === "nl" && teams[j].league === "nl") || (league === "al" && teams[j].league === "al") || (league==="mlb")){
                                 var minimumPlateAppearances = (teams[j].stat.gamesPlayed) * 3.1;
                                 break;
                         }
