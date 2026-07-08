@@ -16,7 +16,7 @@ let avgRank = 1;
 let stat = "era";
 let colorNonQualifiedPlayers = true;
 async function getERAData(season) {
-stat = "era";
+        stat = "era";
         let changeERATab = document.getElementById("eraTab"); //makes ERA tab look selected
         changeERATab.style.backgroundColor = 'white';
         changeERATab.style.border = '2px solid black';
@@ -27,10 +27,19 @@ stat = "era";
         const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=pitching&season=" + season + "&sportIds=1");
         const pData = await playerAPI.json();
         const tData = await teamAPI.json();
-        const minimumInnings = tData.stats[0].splits[0].stat.gamesPlayed; //not based on any particular team yet
+        const teams = tData.stats[0].splits;
+        //const minimumInnings = tData.stats[0].splits[0].stat.gamesPlayed;
         const players = pData.stats[0].splits;
         let preAdjustmentERA = " ";
-        for (let i = 0; i < players.length; i++) {
+        for (let i = 0; i < players.length; i++){
+            for (let i = 0; i < teams.length; i++){ //find player's team's games played for accurate minimum innings count
+                    if (players[i].team.id !== teams[i].team.id){
+                            continue;
+                    }
+                    if (players[i].team.id === teams[i].team.id){
+                            var minimumInnings = teams[i].stat.gamesPlayed; //var used for function scope
+                    }
+            }    
             if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
                 adjustedERA = (players[i].stat.era * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
                 players[i].adjustedERA = adjustedERA; //still uses adjustedERA so they can be compared against non-qualifiers
