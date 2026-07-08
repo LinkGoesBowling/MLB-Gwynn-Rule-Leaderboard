@@ -24,13 +24,13 @@ async function getERAData(season) {
         let preAdjustmentERA = " ";
         for (let i = 0; i < players.length; i++) {
             if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
-                let adjustedERA = players[i].stat.era
+                let adjustedERA = parseFloat(players[i].stat.era);
                 players[i].adjustedERA = adjustedERA;
                 players[i].preAdjustmentERA = " ";
             }
             else if (players[i].stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
                 const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
-                let adjustedERA = (modifiedERTotal * 9) / minimumInnings
+                let adjustedERA = (modifiedERTotal * 9) / minimumInnings;
                 adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
                 adjustedERA = parseFloat(adjustedERA); //converts from string to number
                 players[i].adjustedERA = adjustedERA.toFixed(2); //sets pitcher's ERA to adjusted ERA and fixes formatting e.g. 3 -> 3.00
