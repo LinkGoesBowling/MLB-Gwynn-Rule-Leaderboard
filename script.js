@@ -40,7 +40,6 @@ async function getERAData(season) {
                 }
                 players[i].adjustedERA = adjustedERA;
                 players[i].preAdjustmentERA = ", adjusted from: " + players[i].stat.era;
-                console.log("Adjusted ERA: " + players[i].player.fullName + " " + players[i].adjustedERA);
             }
         }
         for (let i = 0; i < players.length; i++){ //increase rank if era is higher than other player
@@ -50,8 +49,8 @@ async function getERAData(season) {
             players.sort((a, b) => a.adjustedERA - b.adjustedERA);
             for (let i = 0; i < 20; i++) {
                 const changeRank = document.getElementById("rank" + (i + 1))
-                changeRank.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA;
-        } //bracket error is here if there is one
+                changeRank.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+        }
         }
 }
 async function getAvgData(season){ //uses same structure as getERAData, but with avg
@@ -92,8 +91,8 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             for (let i = 0; i < 20; i++) {
                 const changeRank = document.getElementById("rank" + (i + 1))
-                changeRank.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA;
-        } //bracket error is here if there is one
+                changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + preAdjustmentAvg;
+        }
         }
         console.log("minimumPlateAppearances: " + minimumPlateAppearances);
 }
