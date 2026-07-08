@@ -6,7 +6,10 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico?">
 </head>
 <body onload="getAvgData(new Date().getFullYear())"></body>
-<input type="text" id="seasonInput">Enter Season</input>
+<div class="season-input">
+  <input type="text" id="seasonInput" placeholder="Enter Season"></input>
+  <button onclick="processInput()">Go</button>
+</div>
 <div class="avg-era-tabs">
   <button class="avg-tab" id="avgTab" onclick="getAvgData(new Date().getFullYear())">AVG</button>
   <button class="era-tab" id="eraTab" onclick="getERAData(new Date().getFullYear())">ERA</button>
