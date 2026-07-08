@@ -13,9 +13,10 @@ Rounding: Nearest thousandth (ex. .343)
 */
 let eraRank = 1;
 let avgRank = 1;
-let stat = "era"
+let stat = "era";
 let colorNonQualifiedPlayers = true;
 async function getERAData(season) {
+stat = "era";
         const playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
         const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=pitching&season=" + season + "&sportIds=1");
         const pData = await playerAPI.json();
@@ -51,10 +52,11 @@ async function getERAData(season) {
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRank.style.color = "red"; //changes non-qualified players to red
                 }
-        }
+            }
         }
 }
 async function getAvgData(season){ //uses same structure as getERAData, but with avg
+stat = "avg";
         const playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
         const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=hitting&season=" + season + "&sportIds=1");
         const pData = await playerAPI.json();
@@ -65,14 +67,14 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
                 let adjustedAvg = players[i].stat.avg;
                 players[i].adjustedAvg = adjustedAvg;
-                players[i].preAdjustmentAvg = " ";
+                players[i].preAdjustmentAvg = " "; //does not add adjustment message
             }
             else if (players[i].stat.plateAppearances < minimumPlateAppearances){ //adjustment for non-qualified players
                 let adjustedAvg = players[i].stat.hits / ((minimumPlateAppearances - players[i].stat.plateAppearances) + players[i].stat.atBats);
                 adjustedAvg = Math.round(adjustedAvg * 1000) / 1000; //rounds to nearest thousandth
                 adjustedAvg = "." + adjustedAvg.toString().split('.')[1];; //removes 0 from start e.g. 0.321 -> .321
                 players[i].adjustedAvg = adjustedAvg;
-                players[i].preAdjustmentAvg = ", adjusted from: " + players[i].stat.avg;
+                players[i].preAdjustmentAvg = ", adjusted from: " + players[i].stat.avg; //add adjustment message
             }
         }
         for (let i = 0; i < players.length; i++){ //increase rank if avg is lower than other players
@@ -86,19 +88,28 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRank.style.color = "red"; //changes non-qualified players to red
                 }
+            }
         }
-        }
-        console.log("minimumPlateAppearances: " + minimumPlateAppearances);
 }
 function changeQualifiedPlayerRule(){
         if (colorNonQualifiedPlayers === true){
                 colorNonQualifiedPlayers = false;
-                const changeRanks = document.getElementById("playerRanks")
-                changeRanks.style.color = "black" //changes all player names back to black
+                if (stat === "avg"){
+                        getAvgData(new Date().getFullYear()); //retriggers getAvgData with current year
+                }
+                if (stat === "era"){
+                        getERAData(new Date().getFullYear());
+                }
                 return;
         }
         if (colorNonQualifiedPlayers === false){
                 colorNonQualifiedPlayers = true;
+                if (stat === "avg"){
+                        getAvgData(new Date().getFullYear()); //retriggers getAvgData with current year
+                }
+                if (stat === "era"){
+                        getERAData(new Date().getFullYear());
+                }
                 return;
         }
 }
