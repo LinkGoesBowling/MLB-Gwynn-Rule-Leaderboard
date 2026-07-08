@@ -245,6 +245,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
             }
         }
+        console.log("minimumPlateAppearances: " + minimumPlateAppearances);
 }
 function switchToNL(){
     
