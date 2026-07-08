@@ -11,10 +11,13 @@ for a hit, determined by the scorer).
 AVG Formula: H/AB
 Rounding: Nearest thousandth (ex. .343) 
 */
+//Note: Variables declared with var were for function scope and were intentionally declared with var. I apologize to the JavaScript community for my villainous act.
 let eraRank = 1;
 let avgRank = 1;
 let stat = "era";
 let colorNonQualifiedPlayers = true;
+let league = "mlb";
+let currentSeason = new Date().getFullYear();
 async function getERAData(season) {
         stat = "era";
         let changeERATab = document.getElementById("eraTab"); //makes ERA tab look selected
@@ -33,7 +36,7 @@ async function getERAData(season) {
         for (let i = 0; i < players.length; i++){
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum innings count
                     if (players[i].team.id === teams[j].team.id){
-                            var minimumInnings = teams[j].stat.gamesPlayed; //var used for function scope
+                            var minimumInnings = teams[j].stat.gamesPlayed;
                             break;
                     }
             }    
@@ -87,11 +90,39 @@ stat = "avg";
         const tData = await teamAPI.json();
         const players = pData.stats[0].splits;
         const teams = tData.stats[0].splits;
+        //leagues were not included in mlb's api, so i had to find them myself
+        if (teams.team.id === (119 || 134 || 115 || 137 || 146 || 120 || 144 || 138 || 112 || 143 || 109 || 121 || 113 || 135 || 173 || 155 || 123 || 132 || 195 || 124 || 150 || 224 || 199 || 187 || 208 || 299 || 297 || 213 || 196 || 129 || 220 || 126 || 209 || 166 || 148 || 221)){ //nl teams, including defunct ones
+                teams.league = "nl";
+        }
+        if (teams.team.id === 158){ //the brewers were originally an al team, but started playing in nl 1998 season
+                if (currentSeason >= 1998){
+                        teams.league = "nl";
+                }
+                if (currentSeason < 1998){
+                        teams.league = "al";
+                }
+        }
+        if (teams.team.id === 117){ //the astros switched from nl to al in 2013
+                if (currentSeason >= 2013){
+                        teams.league = "al";
+                }
+                if (currentSeason < 2013){
+                        teams.league = "nl";
+                }
+        }
+        else { //other teams are considered al, including ones from defunct leagues
+               teams.league = "al";
+        }
         for (let i = 0; i < players.length; i++) {
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA count
-                    if (players[i].team.id === teams[j].team.id){
-                            var minimumPlateAppearances = (teams[j].stat.gamesPlayed) * 3.1; //var used for function scope
-                            break;
+                if (players[i].team.id === teams[j].team.id){
+                        if ((league === "nl" && teams.league === "nl") || (league === "al" && teams.league === "al") || (league==="mlb")){
+                                var minimumPlateAppearances = (teams[j].stat.gamesPlayed) * 3.1;
+                                break;
+                        }
+                        else {
+                                continue;
+                        }
             }
             } //add bracket here if there is a bracket error 
             if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
@@ -144,27 +175,75 @@ function changeQualifiedPlayerRule(){
         if (colorNonQualifiedPlayers === false){
                 colorNonQualifiedPlayers = true;
                 if (stat === "avg"){
-                        getAvgData(new Date().getFullYear()); //retriggers getAvgData with current year
+                        getAvgData(currentSeason); //retriggers getAvgData with current year or most recently entered season
                 }
                 if (stat === "era"){
-                        getERAData(new Date().getFullYear());
+                        getERAData(currentSeason);
                 }
                 return;
         }
 }
+function switchToMLB(){
+        league = "mlb";
+        let mlbTab = document.getElementById("mlbTab");
+        mlbTab.style.backgroundColor = 'white';
+        mlbTab.style.border = '2px solid black';
+        let nlTab = document.getElementById("nlTab");
+        nlTab.style.backgroundColor = 'gray';
+        nlTab.style.border = '1px solid black';
+        let alTab = document.getElementById("alTab");
+        alTab.style.backgroundColor = 'gray';
+        alTab.style.border = '1px solid black';
+        if (stat === "avg"){
+                getAvgData(currentSeason);
+        }
+        if (stat === "era"){
+                getERAData(currentSeason);
+        }
+}
 function switchToNL(){
-    
+    league = "nl";
+        let mlbTab = document.getElementById("mlbTab");
+        mlbTab.style.backgroundColor = 'gray';
+        mlbTab.style.border = '1px solid black';
+        let nlTab = document.getElementById("nlTab");
+        nlTab.style.backgroundColor = 'white';
+        nlTab.style.border = '2px solid black';
+        let alTab = document.getElementById("alTab");
+        alTab.style.backgroundColor = 'gray';
+        alTab.style.border = '1px solid black';
+        if (stat === "avg"){
+                getAvgData(currentSeason);
+        }
+        if (stat === "era"){
+                getERAData(currentSeason);
+        }
 }
 function switchToAL(){
-    
+        let mlbTab = document.getElementById("mlbTab");
+        mlbTab.style.backgroundColor = 'gray';
+        mlbTab.style.border = '1px solid black';
+        let nlTab = document.getElementById("nlTab");
+        nlTab.style.backgroundColor = 'gray';
+        nlTab.style.border = '1px solid black';
+        let alTab = document.getElementById("alTab");
+        alTab.style.backgroundColor = 'white';
+        alTab.style.border = '2px solid black';
+    league = "al";
+        if (stat === "avg"){
+                getAvgData(currentSeason);
+        }
+        if (stat === "era"){
+                getERAData(currentSeason);
+        }
 }
 function processInput(){
         const seasonInputElement = document.getElementById("seasonInput");
-        const season = seasonInputElement.value;
+        currentSeason = seasonInputElement.value;
         if (stat === "avg"){
-                getAvgData(season);
+                getAvgData(currentSeason);
         }
         if (stat === "era"){
-                getERAData(season);
+                getERAData(currentSeason);
         }
 }
