@@ -50,7 +50,7 @@ async function getERAData(season) {
             players.sort((a, b) => a.adjustedERA - b.adjustedERA);
             for (let i = 0; i < 20; i++) {
                 const changeRank = document.getElementById("rank" + (i + 1))
-                changeRank.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + preAdjustmentERA;
+                changeRank.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
         }
         }
 }
@@ -92,7 +92,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             for (let i = 0; i < 20; i++) {
                 const changeRank = document.getElementById("rank" + (i + 1))
-                changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + preAdjustmentAvg;
+                changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i]preAdjustmentAvg;
         }
         }
         console.log("minimumPlateAppearances: " + minimumPlateAppearances);
