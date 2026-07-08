@@ -252,9 +252,11 @@ async function getAvgData(){ //uses same structure as getERAData, but with avg
 }
 function switchToERA(){
     stat="era";
+    getERAData();
 }
 function switchToAvg(){
     stat="avg";
+    getAvgData();
 }
 function switchToNL(){
     
