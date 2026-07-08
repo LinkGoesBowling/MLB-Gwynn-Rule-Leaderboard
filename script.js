@@ -48,86 +48,10 @@ async function getERAData(season) {
                 eraRank++;
             }
             players.sort((a, b) => a.adjustedERA - b.adjustedERA);
-            if (eraRank === 1){ //modify top 20 ranks on website
-                let changeRanks = document.getElementById("rank1");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 2){
-                let changeRanks = document.getElementById("rank2");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 3){
-                let changeRanks = document.getElementById("rank3");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 4){
-                let changeRanks = document.getElementById("rank4");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 5){
-                let changeRanks = document.getElementById("rank5");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 6){
-                let changeRanks = document.getElementById("rank6");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 7){
-                let changeRanks = document.getElementById("rank7");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 8){
-                let changeRanks = document.getElementById("rank8");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 9){
-                let changeRanks = document.getElementById("rank9");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 10){
-                let changeRanks = document.getElementById("rank10");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 11){
-                let changeRanks = document.getElementById("rank11");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 12){
-                let changeRanks = document.getElementById("rank12");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 13){
-                let changeRanks = document.getElementById("rank13");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 14){
-                let changeRanks = document.getElementById("rank14");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 15){
-                let changeRanks = document.getElementById("rank15");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 16){
-                let changeRanks = document.getElementById("rank16");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 17){
-                let changeRanks = document.getElementById("rank17");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 18){
-                let changeRanks = document.getElementById("rank18");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 19){
-                let changeRanks = document.getElementById("rank19");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
-            if (eraRank === 20){
-                let changeRanks = document.getElementById("rank20");
-                changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-            }
+            for (let i = 0; i < 20; i++) {
+                const changeRank = document.getElementById("rank" + (i + 1))
+                changeRank.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA;
+        } //bracket error is here if there is one
         }
 }
 async function getAvgData(season){ //uses same structure as getERAData, but with avg
@@ -166,86 +90,10 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 avgRank++;
             }
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
-            if (avgRank === 1){ //modify top 20 ranks on website
-                let changeRanks = document.getElementById("rank1");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 2){
-                let changeRanks = document.getElementById("rank2");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 3){
-                let changeRanks = document.getElementById("rank3");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 4){
-                let changeRanks = document.getElementById("rank4");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 5){
-                let changeRanks = document.getElementById("rank5");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 6){
-                let changeRanks = document.getElementById("rank6");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 7){
-                let changeRanks = document.getElementById("rank7");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 8){
-                let changeRanks = document.getElementById("rank8");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 9){
-                let changeRanks = document.getElementById("rank9");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 10){
-                let changeRanks = document.getElementById("rank10");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 11){
-                let changeRanks = document.getElementById("rank11");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 12){
-                let changeRanks = document.getElementById("rank12");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 13){
-                let changeRanks = document.getElementById("rank13");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 14){
-                let changeRanks = document.getElementById("rank14");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 15){
-                let changeRanks = document.getElementById("rank15");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 16){
-                let changeRanks = document.getElementById("rank16");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 17){
-                let changeRanks = document.getElementById("rank17");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 18){
-                let changeRanks = document.getElementById("rank18");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 19){
-                let changeRanks = document.getElementById("rank19");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
-            if (avgRank === 20){
-                let changeRanks = document.getElementById("rank20");
-                changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-            }
+            for (let i = 0; i < 20; i++) {
+                const changeRank = document.getElementById("rank" + (i + 1))
+                changeRank.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA;
+        } //bracket error is here if there is one
         }
         console.log("minimumPlateAppearances: " + minimumPlateAppearances);
 }
