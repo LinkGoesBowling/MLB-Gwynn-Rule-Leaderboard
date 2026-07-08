@@ -17,6 +17,12 @@ let stat = "era";
 let colorNonQualifiedPlayers = true;
 async function getERAData(season) {
 stat = "era";
+        let changeERATab = document.getElementById("eraTab"); //makes ERA tab look selected
+        changeERATab.style.backgroundColor = 'white';
+        changeERATab.style.border = '2px solid black';
+        let changeAvgTab = document.getElementById("avgTab"); //makes avg tab not selected
+        changeAvgTab.style.backgroundColor = 'gray';
+        changeAvgTab.style.border = '1px solid black';
         const playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
         const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=pitching&season=" + season + "&sportIds=1");
         const pData = await playerAPI.json();
@@ -60,6 +66,12 @@ stat = "era";
 }
 async function getAvgData(season){ //uses same structure as getERAData, but with avg
 stat = "avg";
+        let changeERATab = document.getElementById("eraTab"); //makes avg tab look selected
+        let changeAvgTab = document.getElementById("avgTab"); //makes ERA tab not selected
+        changeAvgTab.style.backgroundColor = 'white';
+        changeAvgTab.style.border = '2px solid black';
+        changeERATab.style.backgroundColor = 'gray';
+        changeERATab.style.border = '1px solid black';
         const playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
         const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=hitting&season=" + season + "&sportIds=1");
         const pData = await playerAPI.json();
