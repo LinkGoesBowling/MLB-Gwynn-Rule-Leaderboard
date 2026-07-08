@@ -2,11 +2,18 @@
 <h2>A leaderboard that includes non-qualified players using MLB's official adjustment rules for non-qualified players. (incomplete)</h2>
 <h3>🌐 Website</h3>
 <p>Go to this website to view the project: https://linkgoesbowling.github.io/MLB-Adjusted-AVG-ERA-Leaderboard/</p>
+<h2>🖼️ Images</h2>
+<figure>
+  <img width="438" height="514" alt="image" src="https://github.com/user-attachments/assets/aa650a8d-8389-4115-bfbd-4d109dde56ec" />
+  <figcaption>ERA Ranks</figcaption>
+</figure>
+<figure>
+  <img width="431" height="512" alt="image" src="https://github.com/user-attachments/assets/b57e2af4-7d49-499b-af6d-593517a8b9f7" />
+  <figcaption>AVG Ranks</figcaption>
+</figure>
 <h2>📖 About</h2>
 <p>This is a solo project that I created to learn about APIs. It uses HTML, CSS, and JavaScript.</p>
 <p>The website adjusts non-qualified players to be with other players. For example, let's go with Shohei Ohtani, my main inspiration for this project. As I am writing this, his ERA is 1.79, but he is not a qualified player since he has 85 IP out of the minimum 91. MLB's official rules for the ERA title say that if a pitcher falls short of the IP requirement, 1 ER and 1 IP will be added. With this rule, his adjusted ERA would be 2.27, which puts him 5th in the NL. Last season, Jonathan Aranda batted .316, but only had 422 PA out of the minimum 502. In the case of batting average, 1 AB is added for every PA missed. Since Aranda had 50 non-PA's, the adjusted average uses 117 H and 450 AB, which would put him at a .260 AVG.</p>
-<h2>🖼️ Images</h2>
-<p>Coming soon!</p>
 <h2>✨ Features when finished</h2>
 <ul>
   <li>Lists all qualified players with their normal averages</li>
