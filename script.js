@@ -68,6 +68,7 @@ stat = "avg";
                 let adjustedAvg = players[i].stat.avg;
                 players[i].adjustedAvg = adjustedAvg;
                 players[i].preAdjustmentAvg = " "; //does not add adjustment message
+                players[i].isQualified = true;
             }
             else if (players[i].stat.plateAppearances < minimumPlateAppearances){ //adjustment for non-qualified players
                 let adjustedAvg = players[i].stat.hits / ((minimumPlateAppearances - players[i].stat.plateAppearances) + players[i].stat.atBats);
@@ -75,6 +76,7 @@ stat = "avg";
                 adjustedAvg = "." + adjustedAvg.toString().split('.')[1];; //removes 0 from start e.g. 0.321 -> .321
                 players[i].adjustedAvg = adjustedAvg;
                 players[i].preAdjustmentAvg = ", adjusted from: " + players[i].stat.avg; //add adjustment message
+                players[i].isQualified = false; //marks player as non-qualified so it appears as red
             }
         }
         for (let i = 0; i < players.length; i++){ //increase rank if avg is lower than other players
