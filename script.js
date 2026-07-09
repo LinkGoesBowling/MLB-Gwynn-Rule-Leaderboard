@@ -171,8 +171,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         createRanks.setAttribute('id', 'rank' + (i + 1)); //add id
                         ol1.appendChild(createRanks);
                 }
-                const ol2 = document.createElement('ol'); //lists players 11-20
-                ol2.setAttribute('start', '11');
+                const ol2 = document.getElementById('playerRanks2'); //lists players 11-20
                 if (ol2.children.length < 10){
                         const createRanks = document.createElement('li'); //create new li elements and add them to the ol
                         createRanks.classList.add('rank' + (i + 11)); //add class
