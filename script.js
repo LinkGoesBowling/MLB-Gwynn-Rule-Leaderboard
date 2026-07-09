@@ -93,6 +93,18 @@ async function getERAData(season) {
 }
 async function getAvgData(season){ //uses same structure as getERAData, but with avg
         stat = "avg";
+        if (currentSeason < 2013){ //include astros in nl if the season was before 2013. else they are an al team
+                nlTeams.push(117);
+        }
+        if (currentSeason >= 2013){
+                nlTeams.splice(nlTeams.indexOf(117));
+        }
+        if (currentSeason < 1998){ //brewers are nl starting 1998 season. else they are al
+                nlTeams.splice(nlTeams.indexOf(158));
+        }
+        if (currentSeason >= 1998){
+                nlTeams.push(158);
+        }
         const ruleDescription = document.getElementById("ruleDescription");
         ruleDescription.textContent = "Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title."
         let changeERATab = document.getElementById("eraTab"); //makes avg tab look selected
@@ -112,6 +124,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 if (players[i].team.id === teams[j].team.id){
                         if (league === "nl" && nlTeams.includes(teams[j].team.id) || (league === "al" && !(nlTeams.includes(teams[j].team.id))) || (league==="mlb")){
                                 var minimumPlateAppearances = Math.round((teams[j].stat.gamesPlayed) * 3.1);
+                                console.log("NL team: " + teams[j].team.name);
                                 break;
                         }
                         else {
