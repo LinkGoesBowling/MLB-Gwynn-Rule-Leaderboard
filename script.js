@@ -123,7 +123,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
         for (let i = 0; i < players.length; i++) {
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA count
                 if (players[i].team.id === teams[j].team.id){
-                        var minimumPlateAppearances = Math.round((teams[j].stat.gamesPlayed) * 3.1);
+                        var minimumPlateAppearances = Math.round((teams[j].stat.gamesPlayed) * 3.1); //set player's personal minimumPlateAppearances to the amount of games his team played times 3.1
                         break;
             }
             }
@@ -136,6 +136,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 }
                 else {
                         players[i].adjustedAvg = -1; //list non-league players last
+                        players[i].preAdjustmentAvg = "Not in selected league"; //message for non-league players in case setting avgRank to -1 does not work
                 }
             }
             else if (players[i].stat.plateAppearances < minimumPlateAppearances){ //adjustment for non-qualified players
@@ -150,6 +151,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 }
                 else {
                         players[i].adjustedAvg = -1; //list non-league players last
+                        players[i].preAdjustmentAvg = "Not in selected league";
                 }
             }
         }
@@ -157,13 +159,24 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             if (i > 0 && players[i].adjustedAvg < players[i - 1].adjustedAvg){
                 avgRank++;
             }
+            if (players[i].adjustedAvg = -1){
+                    avgRank = -1; //hide non qualified players
+            }
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             for (let i = 0; i < 20; i++) {
-                const ol = document.getElementById('playerRanks');
-                if (ol.children.length < 20){
+                const ol1 = document.getElementById('playerRanks');
+                if (ol1.children.length < 10){
                         const createRanks = document.createElement('li'); //create new li elements and add them to the ol
                         createRanks.classList.add('rank' + (i + 1)); //add class
                         createRanks.setAttribute('id', 'rank' + (i + 1)); //add id
+                        ol.appendChild(createRanks);
+                }
+                const ol2 = document.createElement('ol'); //lists players 11-20
+                ol2.setAttribute('start', '11');
+                if (ol2.children.length < 10){
+                        const createRanks = document.createElement('li'); //create new li elements and add them to the ol
+                        createRanks.classList.add('rank' + (i + 11)); //add class
+                        createRanks.setAttribute('id', 'rank' + (i + 11)); //add id
                         ol.appendChild(createRanks);
                 }
                 const changeRank = document.getElementById("rank" + (i + 1))
