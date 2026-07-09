@@ -159,12 +159,12 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             }
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             for (let i = 0; i < 20; i++) {
-                const ol = document.getElementById('playerRanks');
-                if (ol.children.length < 20){
+                const ol1 = document.getElementById('playerRanks');
+                if (ol1.children.length < 10){
                         const createRanks = document.createElement('li'); //create new li elements and add them to the ol
                         createRanks.classList.add('rank' + (i + 1)); //add class
                         createRanks.setAttribute('id', 'rank' + (i + 1)); //add id
-                        ol.appendChild(createRanks);
+                        ol1.appendChild(createRanks);
                 }
                 const changeRank = document.getElementById("rank" + (i + 1))
                 changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
