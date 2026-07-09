@@ -128,7 +128,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             }
             }
             if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
-                if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && nlTeams(!(includes(players[i].team.id)))){ //check if player is in selected league
+                if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && !nlTeams.includes(players[i].team.id)){ //check if player is in selected league
                         let adjustedAvg = players[i].stat.avg;
                         players[i].adjustedAvg = adjustedAvg;
                         players[i].preAdjustmentAvg = " "; //does not add adjustment message
@@ -139,7 +139,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 }
             }
             else if (players[i].stat.plateAppearances < minimumPlateAppearances){ //adjustment for non-qualified players
-                if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && nlTeams(!(includes(players[i].team.id)))){ //check if player is in selected league
+                if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && !nlTeams.includes(players[i].team.id)){ //check if player is in selected league
                         let adjustedAvg = players[i].stat.hits / ((minimumPlateAppearances - players[i].stat.plateAppearances) + players[i].stat.atBats);
                         adjustedAvg = Math.round(adjustedAvg * 1000) / 1000; //rounds to nearest thousandth
                         adjustedAvg = (adjustedAvg * 1).toFixed(3); //adds trailing 0's if needed. ex. .3 -> .300
