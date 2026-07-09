@@ -18,8 +18,21 @@ let stat = "era";
 let colorNonQualifiedPlayers = true;
 let league = "mlb";
 let currentSeason = new Date().getFullYear();
+let nlTeams = [119, 134, 115, 137, 146, 120, 144, 138, 112, 143, 109, 121, 113, 135, 173, 155, 123, 132, 195, 124, 150, 224, 199, 187, 208, 299, 297, 213, 196, 129, 220, 126, 209, 166, 148, 221];
 async function getERAData(season) {
         stat = "era";
+        if (currentSeason < 2013){ //include astros in nl if the season was before 2013. else they are an al team
+                nlTeams.push(117);
+        }
+        if (currentSeason >= 2013){
+                nlTeams.splice(nlTeams.indexOf(117));
+        }
+        if (currentSeason < 1998){ //brewers are nl starting 1998 season. else they are al
+                nlTeams.splice(nlTeams.indexOf(158));
+        }
+        if (currentSeason >= 1998){
+                nlTeams.push(158);
+        }
         const ruleDescription = document.getElementById("ruleDescription");
         ruleDescription.textContent = "Unofficial rule: If a pitcher falls short of the IP requirement (same as amount of respective player's team's games played), 1 ER and 1 IP will be added for every inning missed.";
         let changeERATab = document.getElementById("eraTab"); //makes ERA tab look selected
@@ -38,7 +51,7 @@ async function getERAData(season) {
         for (let i = 0; i < players.length; i++){
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum innings count
                     if (players[i].team.id === teams[j].team.id){
-                            var minimumInnings = teams[j].stat.gamesPlayed;
+                            var minimumInnings = Math.round(teams[j].stat.gamesPlayed);
                             break;
                     }
             }    
@@ -96,32 +109,9 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
         const teams = tData.stats[0].splits;
         for (let i = 0; i < players.length; i++) {
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA count
-                    //leagues were not included in mlb's api, so i had to find them myself
-                if (teams[j].team.id === (119 || 134 || 115 || 137 || 146 || 120 || 144 || 138 || 112 || 143 || 109 || 121 || 113 || 135 || 173 || 155 || 123 || 132 || 195 || 124 || 150 || 224 || 199 || 187 || 208 || 299 || 297 || 213 || 196 || 129 || 220 || 126 || 209 || 166 || 148 || 221)){ //nl teams, including defunct ones
-                        teams.league = "nl";
-                }
-                if (teams[j].team.id === 158){ //the brewers were originally an al team, but started playing in nl 1998 season
-                        if (currentSeason >= 1998){
-                                teams.league = "nl";
-                        }
-                        if (currentSeason < 1998){
-                                teams.league = "al";
-                        }
-                }
-                if (teams[j].team.id === 117){ //the astros switched from nl to al in 2013
-                        if (currentSeason >= 2013){
-                                teams.league = "al";
-                        }
-                        if (currentSeason < 2013){
-                                teams.league = "nl";
-                        }
-                }
-                else { //other teams are considered al, including ones from defunct leagues
-                       teams[j].league = "al";
-                }
                 if (players[i].team.id === teams[j].team.id){
-                        if ((league === "nl" && teams[j].league === "nl") || (league === "al" && teams[j].league === "al") || (league==="mlb")){
-                                var minimumPlateAppearances = (teams[j].stat.gamesPlayed) * 3.1;
+                        if ((league === "nl" && nlTeams.includes(teams[j].team.id) || (league === "al" && nlTeams.!includes(teams[j].team.id)) || (league==="mlb")){
+                                var minimumPlateAppearances = Math.round((teams[j].stat.gamesPlayed) * 3.1);
                                 break;
                         }
                         else {
@@ -169,10 +159,10 @@ function changeQualifiedPlayerRule(){
         if (colorNonQualifiedPlayers === true){
                 colorNonQualifiedPlayers = false;
                 if (stat === "avg"){
-                        getAvgData(new Date().getFullYear()); //retriggers getAvgData with current year
+                        getAvgData(currentSeason); //retriggers getAvgData with year user inputted
                 }
                 if (stat === "era"){
-                        getERAData(new Date().getFullYear());
+                        getERAData(currentSeason);
                 }
                 return;
         }
@@ -233,7 +223,7 @@ function switchToAL(){
         let alTab = document.getElementById("alTab");
         alTab.style.backgroundColor = 'white';
         alTab.style.border = '2px solid black';
-    league = "al";
+        league = "al";
         if (stat === "avg"){
                 getAvgData(currentSeason);
         }
