@@ -126,9 +126,6 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                                 if (!(nlTeams.includes(teams[j].team.id))){
                                         break;
                                 }
-                                else{
-                                        continue;
-                                }
                         }
                         var minimumPlateAppearances = Math.round((teams[j].stat.gamesPlayed) * 3.1);
                         break;
