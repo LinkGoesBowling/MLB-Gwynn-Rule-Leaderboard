@@ -167,18 +167,18 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 const ol1 = document.getElementById('playerRanks');
                 if (ol1.children.length < 10){
                         const createRanks = document.createElement('li'); //create new li elements and add them to the ol
-                        createRanks.classList.add('rank' + (i + 1)); //add class
-                        createRanks.setAttribute('id', 'rank' + (i + 1)); //add id
+                        createRanks.classList.add('rank' + (i)); //add class
+                        createRanks.setAttribute('id', 'rank' + (i)); //add id
                         ol1.appendChild(createRanks);
                 }
                 const ol2 = document.getElementById('playerRanks2'); //lists players 11-20
                 if (ol2.children.length < 10){
                         const createRanks = document.createElement('li'); //create new li elements and add them to the ol
-                        createRanks.classList.add('rank' + (i + 11)); //add class
-                        createRanks.setAttribute('id', 'rank' + (i + 11)); //add id
+                        createRanks.classList.add('rank' + (i + 10)); //add class
+                        createRanks.setAttribute('id', 'rank' + (i + 10)); //add id
                         ol2.appendChild(createRanks);
                 }
-                const changeRank = document.getElementById("rank" + (i))
+                const changeRank = document.getElementById("rank" + (i + 1))
                 changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRank.style.color = "red"; //changes non-qualified players to red
