@@ -1,7 +1,7 @@
 # MLB Gwynn Rule Adjusted AVG/ERA Leaderboard
 <h2>A leaderboard that includes non-qualified players using MLB's official adjustment rules (Tony Gwynn rule) for non-qualified hitters and an unofficial rule for pitchers.</h2>
 <h3>🌐 Website</h3>
-<p>Go to this website to view the project: https://linkgoesbowling.github.io/MLB-Adjusted-AVG-ERA-Leaderboard/</p>
+<p>Go to this website to view the project: https://linkgoesbowling.github.io/MLB-Gwynn-Rule-Leaderboard/</p>
 <h3>🖼️ Images</h2>
 <figure>
   <img width="783" height="871" alt="image" src="https://github.com/user-attachments/assets/e6ab0431-ec6a-4fca-a11a-0ec0fcd88bf7" />
