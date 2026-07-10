@@ -150,14 +150,11 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         players[i].isQualified = false; //marks player as non-qualified so it appears as red
                 }
                 else {
-                        players[i].adjustedAvg = -1; //list non-league players last
+                        players[i].adjustedAvg = -1; //set non-league players to -1 so they either appear as last or never appear at all
                 }
             }
         }
-        for (let i = 0; i < players.length; i++){ //increase rank if avg is lower than other players
-            if (i > 0 && players[i].adjustedAvg < players[i - 1].adjustedAvg){
-                avgRank++;
-            }
+        for (let i = 0; i < players.length; i++){
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             for (let i = 0; i < playersShown; i++) {
                 const ol1 = document.getElementById('playerRanks');
@@ -174,7 +171,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         createRanks.setAttribute('id', 'rank' + (i + 11)); //add id
                         ol2.appendChild(createRanks);
                 } */
-                const changeRank = document.getElementById("rank" + (i + 1 + (playersShown - 20)));
+                const changeRank = document.getElementById("rank" + (i + 1));
                 changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRank.style.color = "red"; //changes non-qualified players to red
