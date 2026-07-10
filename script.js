@@ -12,7 +12,7 @@ for a hit, determined by the scorer), and catcher's interference.
 AVG Formula: H/AB
 Rounding: Nearest thousandth (ex. .343) 
 */
-//Note: Variables declared with var were for function scope. Sorry for ending the world guys
+//Note: Variables declared with var were for function scope. No, the JS police haven't arrived yet.
 let eraRank = 1;
 let avgRank = 1;
 let stat = "era";
