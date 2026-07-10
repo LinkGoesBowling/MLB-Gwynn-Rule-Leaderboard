@@ -4,12 +4,12 @@
 <p>Go to this website to view the project: https://linkgoesbowling.github.io/MLB-Adjusted-AVG-ERA-Leaderboard/</p>
 <h3>🖼️ Images</h2>
 <figure>
-  <img width="391" height="497" alt="{C15AAD98-0B68-4B98-A520-614757E53F71}" src="https://github.com/user-attachments/assets/71cda2b4-7ad2-496a-b1be-e14b842c99a4" />
-  <figcaption>AVG Ranks, 2012 season, both leagues</figcaption>
+  <img width="783" height="871" alt="image" src="https://github.com/user-attachments/assets/e6ab0431-ec6a-4fca-a11a-0ec0fcd88bf7" />
+  <figcaption>AVG Ranks, 1996 season, NL</figcaption>
 </figure>
 <figure>
-  <img width="394" height="493" alt="{9B25A879-0416-47E5-9E5C-9F0ED6B518C6}" src="https://github.com/user-attachments/assets/fc0c0fb3-d15b-4f1e-bcb1-1c18317e3e18" />
-  <figcaption>ERA Ranks, 2026 season, both leagues as of Jul 8, 2026</figcaption>
+  <img width="785" height="855" alt="image" src="https://github.com/user-attachments/assets/d9fff58e-a4ab-4973-be61-7fe84dd43934" />
+  <figcaption>ERA Ranks, 2026 season, both leagues as of Jul 9, 2026</figcaption>
 </figure>
 <h3>📖 About</h2>
 <p>This is a solo project that I created to learn about APIs. It uses HTML, CSS, and JavaScript.</p>
