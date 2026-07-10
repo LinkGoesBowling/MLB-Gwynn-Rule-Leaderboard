@@ -28,7 +28,7 @@
 }
 .al-tab{
   display: inline-block;
-  margin: 0 1px;
+  margin: 0 0px;
 }
 .ols{ /* was originally intended to align both ol elements with each other*/
   overflow: hidden;
@@ -65,4 +65,23 @@ body{
 }
 ol{
   list-style-position: inside;
+}
+.name-column, .avg-column, .pre-adjusted-avg-column, .rank-column, .name-box, .avg-box, .pre-adjusted-avg-box, .rank-box{
+  background-color: white;
+  border: 2px solid black;
+  display: inline-block;
+  margin: 0 -5px;
+  text-align: center;
+}
+.pre-adjusted-avg-column, .pre-adjusted-avg-box{
+  width: 100px;
+}
+.name-column, .name-box{
+  width: 200px;
+}
+.avg-column, .avg-box{
+  width: 100px;
+}
+.rank-column, .rank-box{
+  width: 60px;
 }
