@@ -164,7 +164,6 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 }
             }
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
-                let ol1 = document.getElementById('playerRanks');
         for (let i = ol1.children.length; i < playersShown; i++) {
                 if (ol1.children.length < playersShown){ //change to half of playersShown for multiple rows
                         const createRanks = document.createElement('li'); //create new li elements and add them to the ol
