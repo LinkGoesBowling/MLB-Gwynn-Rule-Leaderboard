@@ -78,10 +78,10 @@ async function getERAData(season) {
                         players[i].preAdjustmentERA = ", adjusted from: " + players[i].stat.era;
                         players[i].isQualified = false;
                     }
-            }
                 else{
                         players[i].adjustedERA = Infinity;
                 }
+            }
         }
         for (let i = 0; i < players.length; i++){
             players.sort((a, b) => a.adjustedERA - b.adjustedERA);
