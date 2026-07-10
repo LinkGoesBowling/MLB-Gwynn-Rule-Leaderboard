@@ -30,10 +30,10 @@
   display: inline-block;
   margin: 0 1px;
 }
-.ols{
+.ols{ /* was originally intended to align both ol elements with each other*/
   overflow: hidden;
 }
-.ol2{
+.ol2{ /*not being used right now */
   text-align: right;
   list-style-position: inside;
   font-size: 25px;
@@ -62,4 +62,7 @@ body{
   border: 0px;
   color: white;
   border-radius: 10px;
+}
+ol{ /* fix first digit of triple-digit numbers not showing */
+  list.style.position: inside;
 }
