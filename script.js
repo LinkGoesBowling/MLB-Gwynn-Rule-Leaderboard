@@ -81,8 +81,8 @@ async function getERAData(season) {
                         createFL.classList.add('fl-tab');
                         createFL.setAttribute('id', 'flTab');
                         createFL.setAttribute('onclick', 'switchToFL()');
-                        createFL.style.border-top-right-radius = '10px';
-                        createFL.style.border-bottom-right-radius = '10px';
+                        createFL.style.borderTopRightRadius = '10px';
+                        createFL.style.borderBottomRightRadius = '10px';
                         leagueTabs.appendChild(createFL);
                 }
         }
