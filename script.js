@@ -58,10 +58,15 @@ async function getERAData(season) {
                     }
             }    
             if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
-                adjustedERA = (players[i].stat.era * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
-                players[i].adjustedERA = adjustedERA; //still uses adjustedERA so they can be compared against non-qualifiers
-                players[i].preAdjustmentERA = " ";
-                players[i].isQualified = true;
+                if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && !nlTeams.includes(players[i].team.id)){ //check if player is in selected league
+                        adjustedERA = (players[i].stat.era * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
+                        players[i].adjustedERA = adjustedERA; //still uses adjustedERA so they can be compared against non-qualifiers
+                        players[i].preAdjustmentERA = " ";
+                        players[i].isQualified = true;
+                }
+                else{
+                        players[i].adjustedERA = NaN;
+                }
             }
             else if (players[i].stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
                 if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && !nlTeams.includes(players[i].team.id)){ //check if player is in selected league
@@ -75,7 +80,7 @@ async function getERAData(season) {
                     }
             }
                 else{
-                        players[i].adjustedERA = -1;
+                        players[i].adjustedERA = NaN;
                 }
         }
         for (let i = 0; i < players.length; i++){
@@ -83,19 +88,23 @@ async function getERAData(season) {
             for (let i = 0; i < playersShown; i++) {
                 const ol1 = document.getElementById('playerRanks');
                 if ((ol1.children.length < playersShown) && (ol1.children.length < players.length)){
-                        const changeRank = document.getElementById("rank" + (i + 1));
-                        if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && !nlTeams.includes(players[i].team.id)){ //check if player is in selected league
-                                changeRank.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-                        }
-                        if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
-                                changeRank.style.color = "red"; //changes non-qualified players to red
-                        }
-                        if (players[i].isQualified === true){
-                                changeRank.style.color = "black"; //when changing from avg to ERA, reset qualified players to black
-                        }
-                        if (colorNonQualifiedPlayers === false){
-                                changeRank.style.color = "black"; //reset all players to black
-                        }
+                        const createRanks = document.createElement('li'); //create new li elements and add them to the ol
+                        createRanks.classList.add('rank' + (i + 1 + (playersShown - 20))); //add class
+                        createRanks.setAttribute('id', 'rank' + (i + 1 + (playersShown - 20))); //add id
+                        ol1.appendChild(createRanks);
+                }
+                const changeRank = document.getElementById("rank" + (i + 1));
+                if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && !nlTeams.includes(players[i].team.id)){ //check if player is in selected league
+                        changeRank.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
+                }
+                if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
+                        changeRank.style.color = "red"; //changes non-qualified players to red
+                }
+                if (players[i].isQualified === true){
+                        changeRank.style.color = "black"; //when changing from ERA to avg, reset qualified players to black
+                }
+                if (colorNonQualifiedPlayers === false){
+                        changeRank.style.color = "black"; //resets all players to black
                 }
             }
         }
