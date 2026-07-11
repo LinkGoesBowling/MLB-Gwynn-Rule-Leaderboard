@@ -225,7 +225,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         createAvgRank.setAttribute('id', 'avgBox' + (i + (playersShown - 19)));
                         columnBoxes.appendChild(createAvgRank);
                         const createPreAdjustRank = document.createElement('div');
-                        createPreAdjustRank.classList.add('pre-adjusted-average-box');
+                        createPreAdjustRank.classList.add('pre-adjusted-avg-box');
                         createPreAdjustRank.setAttribute('id', 'preAdjustBox' + (i + (playersShown - 19)));
                         columnBoxes.appendChild(createPreAdjustRank);
                         const createBr = document.createElement('br');
@@ -239,13 +239,13 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         changeRank.textContent = (i + 1); //edit boxes
                         changeName.textContent = players[i].player.fullName;
                         changeAvg.textContent = players[i].stat.avg;
-                        //changePreAdjust.textContent = players[i].preAdjustmentAvg;
+                        changePreAdjust.textContent = players[i].preAdjustmentAvg;
                 }
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRank.style.color = "red";
                         changeName.style.color = "red"; //changes non-qualified players to red
                         changeAvg.style.color = "red";
-                        //changePreAdjust.style.color = "red";
+                        changePreAdjust.style.color = "red";
                         
                 }
                 if (players[i].isQualified === true){
