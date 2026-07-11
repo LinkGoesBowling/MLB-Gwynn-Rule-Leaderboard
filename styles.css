@@ -73,15 +73,35 @@ ol{
   margin: 0 -5px;
   text-align: center;
 }
-.pre-adjusted-avg-column, .pre-adjusted-avg-box{
+.pre-adjusted-avg-column{
   width: 100px;
+  height: 20px;
 }
-.name-column, .name-box{
+.name-column{
   width: 200px;
+  height: 20px;
 }
-.avg-column, .avg-box{
+.avg-column{
   width: 100px;
+  height: 20px;
 }
-.rank-column, .rank-box{
+.rank-column{
   width: 60px;
+  height: 20px;
+}
+.rank-box{
+  width: 64px;
+  height: 20px;
+}
+.name-box{
+  width: 205px;
+  height: 20px;
+}
+.avg-box{
+  width: 104px;
+  height: 20px;
+}
+.pre-adjusted-avg-box{
+  width: 100px;
+  height: 20px;
 }
