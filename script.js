@@ -212,15 +212,40 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             for (let i = 0; i < playersShown; i++) {
                 const ol1 = document.getElementById('playerRanks');
+                const columnBoxes = document.getElementById('columnBoxes');
                 if ((ol1.children.length < playersShown) && (ol1.children.length < players.length)){ //change to half of playersShown for multiple rows
                         const createRanks = document.createElement('div'); //create new li elements and add them to the ol
-                        createRanks.classList.add('rank' + (i + 1 + (playersShown - 20))); //add class
-                        createRanks.setAttribute('id', 'rank' + (i + 1 + (playersShown - 20))); //add id
+                        createRanks.classList.add('rank' + (i + (playersShown - 19))); //add class
+                        createRanks.setAttribute('id', 'rank' + (i + (playersShown - 19))); //add id
                         ol1.appendChild(createRanks);
+                        const rankBoxes = document.createElement('div');
+                        rankBoxes.classList.add('rank-box' + (i + (playersShown - 19)));
+                        rankBoxes.setAttribute('id', 'rankBox' + (i + (playersShown - 19)));
+                        columnBoxes.appendChild(rankBoxes);
+                        const nameBoxes = document.createElement('div');
+                        nameBoxes.classList.add('name-box' + (i + (playersShown - 19)));
+                        nameBoxes.setAttribute('id', 'nameBox' + (i + (playersShown - 19)));
+                        columnBoxes.appendChild(nameBoxes);
+                        const avgBoxes = document.createElement('div');
+                        avgBoxes.classList.add('avg-box' + (i + (playersShown - 19)));
+                        avgBoxes.setAttribute('id', 'avgBox' + (i + (playersShown - 19)));
+                        columnBoxes.appendChild(avgBoxes);
+                        /*const preAdjustBoxes = document.createElement('div');
+                        preAdjustBoxes.classList.add('pre-adjusted-avg-box' + (i + (playersShown - 19)));
+                        preAdjustBoxes.setAttribute('id', 'preAdjustBox' + (i + (playersShown - 19)));
+                        columnBoxes.appendChild(preAdjustBoxes);*/
+                        const br = document.createElement('br');
+                        columnBoxes.appendChild(br);
                 }
                 const changeRank = document.getElementById("rank" + (i + 1));
+                const changeRankBox = document.getElementById("rankBox" + (i + 1));
+                const changeNameBox = document.getElementById("nameBox" + (i + 1));
+                const changeAvgBox = document.getElementById("avgBox" + (i + 1));
                 if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
                         changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
+                        changeRankBox.textContent = (i + 1);
+                        changeNameBox.textContent = players[i].player.fullName;
+                        changeAvgBox.textContent = players[i].adjustedAvg;
                 }
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRank.style.color = "red"; //changes non-qualified players to red
