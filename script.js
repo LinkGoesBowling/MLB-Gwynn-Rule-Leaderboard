@@ -200,7 +200,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         adjustedAvg = (adjustedAvg * 1).toFixed(3); //adds trailing 0's if needed. ex. .3 -> .300
                         adjustedAvg = "." + adjustedAvg.toString().split('.')[1]; //removes 0 from start e.g. 0.321 -> .321
                         players[i].adjustedAvg = adjustedAvg;
-                        players[i].preAdjustmentAvg = ", adjusted from: " + players[i].stat.avg; //add adjustment message
+                        players[i].preAdjustmentAvg = players[i].stat.avg; //original avg
                         players[i].isQualified = false; //marks player as non-qualified so it appears as red
                 }
                 else {
@@ -230,10 +230,10 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         avgBoxes.classList.add('avg-box');
                         avgBoxes.setAttribute('id', 'avgBox' + (i + (playersShown - 19)));
                         columnBoxes.appendChild(avgBoxes);
-                        /*const preAdjustBoxes = document.createElement('div');
-                        preAdjustBoxes.classList.add('pre-adjusted-avg-box' + (i + (playersShown - 19)));
+                        const preAdjustBoxes = document.createElement('div');
+                        preAdjustBoxes.classList.add('pre-adjusted-avg-box');
                         preAdjustBoxes.setAttribute('id', 'preAdjustBox' + (i + (playersShown - 19)));
-                        columnBoxes.appendChild(preAdjustBoxes);*/
+                        columnBoxes.appendChild(preAdjustBoxes);
                         const br = document.createElement('br');
                         columnBoxes.appendChild(br);
                 }
@@ -241,20 +241,27 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 const changeRankBox = document.getElementById("rankBox" + (i + 1));
                 const changeNameBox = document.getElementById("nameBox" + (i + 1));
                 const changeAvgBox = document.getElementById("avgBox" + (i + 1));
+                const changePreAdjust = document.getElementById("preAdjust" + (i + 1));
                 if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
                         changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
                         changeRankBox.textContent = (i + 1);
                         changeNameBox.textContent = players[i].player.fullName;
                         changeAvgBox.textContent = players[i].adjustedAvg;
+                        changePreAdjust.textContent = players[i].stat.avg;
                 }
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRank.style.color = "red"; //changes non-qualified players to red
+                        changeRankBox.style.color = "red";
+                        changeNameBox.style.color = "red";
+                        changeAvgBox.style.color = "red";
+                        changePreAdjust.style.color = "red";
                 }
-                if (players[i].isQualified === true){
-                        changeRank.style.color = "black"; //when changing from ERA to avg, reset qualified players to black
-                }
-                if (colorNonQualifiedPlayers === false){
-                        changeRank.style.color = "black"; //resets all players to black
+                if (players[i].isQualified === true || colorNonQualifiedPlayers === false){
+                        changeRank.style.color = "black"; //change qualified spots to black and change all spots to black when box is unchecked
+                        changeRankBox.style.color = "black";
+                        changeNameBox.style.color = "black";
+                        changeAvgBox.style.color = "black";
+                        changePreAdjust.style.color = "black";
                 }
             }
         }
