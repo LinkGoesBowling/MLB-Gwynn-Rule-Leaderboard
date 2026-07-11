@@ -240,26 +240,26 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         changeRank.textContent = (i + 1); //edit boxes
                         changeName.textContent = players[i].player.fullName;
                         changeAvg.textContent = players[i].stat.avg;
-                        changePreAdjust.textContent = players[i].preAdjustmentAvg;
+                        //changePreAdjust.textContent = players[i].preAdjustmentAvg;
                 }
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRank.style.color = "red";
                         changeName.style.color = "red"; //changes non-qualified players to red
                         changeAvg.style.color = "red";
-                        changePreAdjust.style.color = "red";
+                        //changePreAdjust.style.color = "red";
                         
                 }
                 if (players[i].isQualified === true){
                         changeRank.style.color = "black";
                         changeName.style.color = "black"; //when changing from ERA to avg, reset qualified players to black
                         changeAvg.style.color = "black";
-                        changePreAdjust.style.color = "black";
+                        //changePreAdjust.style.color = "black";
                 }
                 if (colorNonQualifiedPlayers === false){
                         changeRank.style.color = "black";
                         changeName.style.color = "black"; //resets all players to black
                         changeAvg.style.color = "black";
-                        changePreAdjust.style.color = "black";
+                        //changePreAdjust.style.color = "black";
                 }
             }
         }
