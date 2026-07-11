@@ -213,6 +213,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             for (let i = 0; i < playersShown; i++) {
                 const columnBoxes = document.getElementById('columnBoxes');
                 if ((columnBoxes.children.length < playersShown) && (columnBoxes.children.length < players.length)){
+                        console.log("Creating rank: " + i);
                         const createRank = document.createElement('div');
                         createRank.classList.add('rank-box');
                         createRank.setAttribute('id', 'rankBox' + (i + (playersShown - 19)));
@@ -236,13 +237,12 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 const changeRank = document.getElementById("rankBox" + (i + 1));
                 const changeAvg = document.getElementById("avgBox" + (i + 1));
                 const changePreAdjust = document.getElementById("preAdjust" + (i + 1));
-                //if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
-                        console.log(i, changeRank);
+                if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
                         changeRank.textContent = (i + 1); //edit boxes
                         changeName.textContent = players[i].player.fullName;
                         changeAvg.textContent = players[i].stat.avg;
                         //changePreAdjust.textContent = players[i].preAdjustmentAvg;
-                //}
+                }
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRank.style.color = "red";
                         changeName.style.color = "red"; //changes non-qualified players to red
