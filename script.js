@@ -207,6 +207,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 }
             }
         }
+}
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             for (let i = 0; i < playersShown; i++) {
                 if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
