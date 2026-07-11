@@ -24,7 +24,7 @@ async function getERAData(season) {
         stat = "era";
         const ruleDescription = document.getElementById("ruleDescription");
         ruleDescription.textContent = "Unofficial rule: If a pitcher falls short of the IP requirement (same as amount of respective player's team's games played), 1 ER and 1 IP will be added for every inning missed.";
-        if (currentSeason <= 1901){ //remove AL/NL tabs for seasons before 1901 when there was only NL
+        /* if (currentSeason <= 1901){ //remove AL/NL tabs for seasons before 1901 when there was only NL
                 var americanLeague = document.getElementById("alTab");
                 americanLeague.remove();
                 var nationalLeague = document.getElementById("nlTab");
@@ -86,7 +86,7 @@ async function getERAData(season) {
                         createFL.style.borderBottomRightRadius = '10px';
                         leagueTabs.appendChild(createFL);
                 }
-        }
+        } */
         let changeERATab = document.getElementById("eraTab"); //makes ERA tab look selected
         changeERATab.style.backgroundColor = 'white';
         changeERATab.style.border = '2px solid black';
@@ -213,10 +213,20 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             for (let i = 0; i < playersShown; i++) {
                 const ol1 = document.getElementById('playerRanks');
                 if ((ol1.children.length < playersShown) && (ol1.children.length < players.length)){ //change to half of playersShown for multiple rows
-                        const createRanks = document.createElement('li'); //create new li elements and add them to the ol
+                        const createRanks = document.createElement('div'); //create new li elements and add them to the ol
                         createRanks.classList.add('rank' + (i + 1 + (playersShown - 20))); //add class
                         createRanks.setAttribute('id', 'rank' + (i + 1 + (playersShown - 20))); //add id
                         ol1.appendChild(createRanks);
+                        if (rank === 1){ //test for editing columns
+                                const rankBox = document.getElementById("rankBox");
+                                rankBox.textContent = 1;
+                                const nameBox = document.getElementById("nameBox");
+                                nameBox.textContent = players[i].player.fullName;
+                                const avgBox = document.getElementById("avgBox");
+                                avgBox.textContent = players[i].stat.avg;
+                                const preAdjust = document.getElementById("preAdjust");
+                                preAdjust.textContent = players[i].preAdjustmentAvg;
+                        }
                 }
                 const changeRank = document.getElementById("rank" + (i + 1));
                 if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
