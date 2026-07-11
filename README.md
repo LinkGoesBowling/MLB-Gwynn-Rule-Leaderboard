@@ -4,7 +4,7 @@
 <p>Go to this website to view the project: https://linkgoesbowling.github.io/MLB-Gwynn-Rule-Leaderboard/</p>
 <h3>🖼️ Images</h2>
 <figure>
-  <img width="783" height="871" alt="image" src="https://github.com/user-attachments/assets/e6ab0431-ec6a-4fca-a11a-0ec0fcd88bf7" />
+  <img width="787" height="862" alt="image" src="https://github.com/user-attachments/assets/37350967-fc76-4120-8cf0-0e1324831f4d" />
   <figcaption>AVG Ranks, 1996 season, NL</figcaption>
 </figure>
 <figure>
@@ -12,7 +12,7 @@
   <figcaption>ERA Ranks, 2026 season, both leagues as of Jul 9, 2026</figcaption>
 </figure>
 <h3>⏳ Status</h3>
-<p>As I am revamping the page to look better, the script is broken, but it still lists some of the top players in AVG accurately.</p>
+<p>The page functions correctly, but I am revamping the website to look better and attempting to merge getAvgData and getERAData into one function to shorten the script.</p>
 <h3>📖 About</h2>
 <p>This is a solo project that I created to learn about APIs. It uses HTML, CSS, and JavaScript.</p>
 <p>The website adjusts non-qualified hitters to be with other players by adding hitless at-bats. A famous example of a player that fell short and won was Tony Gwynn in 1996. His original batting average was .353 but then it was adjusted to .349 since he fell short, and then he still won the batting title. I also programmed a rule for pitchers, although it is not based on an official rule that if a player falls short, 1 ER and 1 IP will be added for every missed inning.</p>
