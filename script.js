@@ -133,7 +133,6 @@ async function getERAData(season) {
                 }
             }
         }
-        for (let i = 0; i < players.length; i++){
             players.sort((a, b) => a.adjustedERA - b.adjustedERA);
             for (let i = 0; i < playersShown; i++) {
                 const ol1 = document.getElementById('playerRanks');
@@ -158,7 +157,6 @@ async function getERAData(season) {
                 }
             }
         }
-}
 async function getAvgData(season){ //uses same structure as getERAData, but with avg
         stat = "avg";
         const ruleDescription = document.getElementById("ruleDescription");
