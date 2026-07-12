@@ -86,7 +86,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         players[i].preAdjustmentAvg = players[i].stat.avg; //original avg
                         players[i].isQualified = false; //marks player as non-qualified so it appears as red
                         const modifiedERTotal = pitchers[i].stat.earnedRuns + (minimumInnings - pitchers[i].stat.inningsPitched);
-                        console.log(modifiedERTotal);
+                        console.log(pitchers[i].fullName + modifiedERTotal);
                         let adjustedERA = (modifiedERTotal * 9) / minimumInnings;
                         adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
                         adjustedERA = (adjustedERA * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
