@@ -316,7 +316,6 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         changePreAdjust.style.color = "black";
                 }
             }
-        }
 }
 function changeQualifiedPlayerRule(){
         if (colorNonQualifiedPlayers === true){
