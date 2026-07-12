@@ -59,7 +59,6 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                     }
                     if (pitchers[i].team.id === teams[j].team.id){
                             var minimumInnings = teams[j].stat.gamesPlayed;
-                            console.log(teams[29].stat.gamesPlayed);
                             break;
                     }
             }
@@ -87,6 +86,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         players[i].preAdjustmentAvg = players[i].stat.avg; //original avg
                         players[i].isQualified = false; //marks player as non-qualified so it appears as red
                         const modifiedERTotal = pitchers[i].stat.earnedRuns + (minimumInnings - pitchers[i].stat.inningsPitched);
+                        console.log(modifiedERTotal);
                         let adjustedERA = (modifiedERTotal * 9) / minimumInnings;
                         adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
                         adjustedERA = (adjustedERA * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
@@ -118,8 +118,8 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 const ol1 = document.getElementById('playerRanks');
                 const columnBoxes = document.getElementById('columnBoxes');
                 if ((ol1.children.length < playersShown) && (ol1.children.length < current.length)){ //change to half of playersShown for multiple rows
-                        const createRanks = document.createElement('div'); //create new li elements and add them to the ol
-                        createRanks.classList.add('rank' + (i + (playersShown - 19))); //add class
+                        const createRanks = document.createElement('div'); //ol1 is still here because otherwise script only lists 4 players
+                        createRanks.style.fontSize = 0; //hide ol1
                         createRanks.setAttribute('id', 'rank' + (i + (playersShown - 19))); //add id
                         ol1.appendChild(createRanks);
                         const rankBoxes = document.createElement('div');
