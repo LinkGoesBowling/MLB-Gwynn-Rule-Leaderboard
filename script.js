@@ -33,7 +33,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 let changeERATab = document.getElementById("eraTab");
                 changeERATab.style.backgroundColor = 'gray';
                 changeERATab.style.border = '1px solid black';
-                current = players;
+                var current = players;
                 currentStat = "avg";
                 var players = pData.stats[0].splits;
         }
@@ -46,7 +46,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 let changeERATab = document.getElementById("eraTab");
                 changeERATab.style.backgroundColor = 'white';
                 changeERATab.style.border = '2px solid black';
-                current = pitchers;
+                var current = pitchers;
                 currentStat = "era";
                 var pitchers = pitcherData.stats[0].splits;
         }
