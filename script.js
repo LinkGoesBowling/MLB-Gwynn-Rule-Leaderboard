@@ -113,7 +113,6 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
             }
                 }
             }
-        }
         for (let i = 0; i < current.length; i++){
                 if (stat === "avg"){
                     players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
@@ -182,6 +181,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         changePreAdjust.style.color = "black";
                 }
             }
+        }
 }
 function changeQualifiedPlayerRule(){
         if (colorNonQualifiedPlayers === true){
