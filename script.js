@@ -41,6 +41,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 changeERATab.style.backgroundColor = 'gray';
                 changeERATab.style.border = '1px solid black';
                 current = players;
+                currentStat = "avg";
         }
         if (stat === "era"){
                 let changeAvgTab = document.getElementById("avgTab");
@@ -50,6 +51,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 changeERATab.style.backgroundColor = 'white';
                 changeERATab.style.border = '2px solid black';
                 current = pitchers;
+                currentStat = "era";
         }
         for (let i = 0; i < players.length; i++) {
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA/inning count
@@ -109,7 +111,9 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                     players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
                 }
                 if (stat === "era"){
-                        pitchers.sort((a, b) => a.adjustedERA - b.adjustedERA);
+                        if (pitchers[i].adjustedERA !== NaN){
+                                pitchers.sort((a, b) => a.adjustedERA - b.adjustedERA);
+                        }
                 }
             for (let i = 0; i < playersShown; i++) {
                 const ol1 = document.getElementById('playerRanks');
@@ -283,10 +287,10 @@ function processInput(){
 }
 function showMorePlayers(){
         playersShown += 20;
-        if (stat === "avg"){
+        if (currentStat === "avg"){
                 getData(currentSeason, "avg");
         }
-        if (stat === "era"){
+        if (currentStat === "era"){
                 getData(currentSeason, "era");
         }
 }
