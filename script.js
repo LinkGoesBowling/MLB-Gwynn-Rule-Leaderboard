@@ -13,8 +13,6 @@ AVG Formula: H/AB
 Rounding: Nearest thousandth (ex. .343) 
 */
 //Note: Variables declared with var were for function scope. No, the JS police haven't arrived yet.
-let eraRank = 1;
-let avgRank = 1;
 let stat = "era";
 let colorNonQualifiedPlayers = true;
 let league = "mlb";
@@ -61,6 +59,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                     }
                     if (pitchers[i].team.id === teams[j].team.id){
                             var minimumInnings = teams[j].stat.gamesPlayed;
+                            console.log(teams[29].stat.gamesPlayed);
                             break;
                     }
             }
@@ -229,10 +228,10 @@ function switchToNL(){
         let alTab = document.getElementById("alTab");
         alTab.style.backgroundColor = 'gray';
         alTab.style.border = '1px solid black';
-        if (stat === "avg"){
+        if (currentStat === "avg"){
                 getData(currentSeason, "avg");
         }
-        if (stat === "era"){
+        if (currentStat === "era"){
                 getData(currentSeason, "era");
         }
 }
@@ -247,10 +246,10 @@ function switchToAL(){
         alTab.style.backgroundColor = 'white';
         alTab.style.border = '2px solid black';
         league = "al";
-        if (stat === "avg"){
+        if (currentStat === "avg"){
                 getData(currentSeason, "avg");
         }
-        if (stat === "era"){
+        if (currentStat === "era"){
                 getData(currentSeason, "era");
         }
 }
@@ -268,20 +267,20 @@ function switchToFL(){
         flTab.style.backgroundColor = 'white';
         flTab.style.border = '2px solid black';
         league = "fl";
-        if (stat === "avg"){
+        if (currentStat === "avg"){
                 getData(currentSeason, "avg");
         }
-        if (stat === "era"){
+        if (currentStat === "era"){
                 getData(currentSeason, "era");
         }
 }
 function processInput(){
         const seasonInputElement = document.getElementById("seasonInput");
         currentSeason = seasonInputElement.value;
-        if (stat === "avg"){
+        if (currentStat === "avg"){
                 getData(currentSeason, "avg");
         }
-        if (stat === "era"){
+        if (currentStat === "era"){
                 getData(currentSeason, "era");
         }
 }
