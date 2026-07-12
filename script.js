@@ -53,11 +53,11 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
         const teams = tData.stats[0].splits;
         for (let i = 0; i < current.length; i++) {
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA/inning count
-                if (players[i].team.id === teams[j].team.id && stat === "avg"){
+                if (stat === "avg" && players[i].team.id === teams[j].team.id){
                         var minimumPlateAppearances = Math.round((teams[j].stat.gamesPlayed) * 3.1);
                         break;
                     }
-                    if (pitchers[i].team.id === teams[j].team.id && stat === "era"){
+                    if (stat === "era" && pitchers[i].team.id === teams[j].team.id){
                             var minimumInnings = teams[j].stat.gamesPlayed;
                             break;
                     }
