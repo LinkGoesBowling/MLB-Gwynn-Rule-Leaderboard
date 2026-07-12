@@ -80,8 +80,8 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         pitchers[i].adjustedERA = Infinity;
                 }
             }
-            else if ((players[i].stat.plateAppearances < minimumPlateAppearances) || (pitchers[i].stat.inningsPitched < minimumInnings)){ //adjustment for non-qualified players
-                if (league === "nl" && current[i].league.name === "NL" || league === "mlb" || league === "al" && current[i].league.name === "AL"){ //check if player is in selected league
+            else if (players[i].stat.plateAppearances < minimumPlateAppearances){ //adjustment for non-qualified players
+                if ((league === "nl" && current[i].league.name === "NL" || league === "mlb" || league === "al" && current[i].league.name === "AL") && (stat === "avg")){ //check if player is in selected league
                         let adjustedAvg = players[i].stat.hits / ((minimumPlateAppearances - players[i].stat.plateAppearances) + players[i].stat.atBats);
                         adjustedAvg = Math.round(adjustedAvg * 1000) / 1000; //rounds to nearest thousandth
                         adjustedAvg = (adjustedAvg * 1).toFixed(3); //adds trailing 0's if needed. ex. .3 -> .300
@@ -89,6 +89,12 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         players[i].adjustedAvg = adjustedAvg;
                         players[i].preAdjustmentAvg = players[i].stat.avg; //original avg
                         players[i].isQualified = false; //marks player as non-qualified so it appears as red
+                }
+                else {
+                        players[i].adjustedAvg = -1; //set non-league players to -1 so they either appear as last or never appear at all
+                        pitchers[i].adjustedERA = Infinity;
+                }
+                if ((pitchers[i].stat.inningsPitched < minimumInnings) && stat === "era"){
                         const modifiedERTotal = pitchers[i].stat.earnedRuns + (minimumInnings - pitchers[i].stat.inningsPitched);
                         let adjustedERA = (modifiedERTotal * 9) / minimumInnings;
                         adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
@@ -101,10 +107,6 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         }
                         pitchers[i].preAdjustmentERA = players[i].stat.era;
                         pitchers[i].isQualified = false;
-                }
-                else {
-                        players[i].adjustedAvg = -1; //set non-league players to -1 so they either appear as last or never appear at all
-                        pitchers[i].adjustedERA = Infinity;
                 }
             }
         }
