@@ -92,7 +92,6 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 }
                 else {
                         players[i].adjustedAvg = -1; //set non-league players to -1 so they either appear as last or never appear at all
-                        pitchers[i].adjustedERA = Infinity;
                 }
                 if ((pitchers[i].stat.inningsPitched < minimumInnings) && stat === "era"){
                         const modifiedERTotal = pitchers[i].stat.earnedRuns + (minimumInnings - pitchers[i].stat.inningsPitched);
@@ -107,6 +106,9 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         }
                         pitchers[i].preAdjustmentERA = players[i].stat.era;
                         pitchers[i].isQualified = false;
+                }
+                else {
+                        pitchers[i].adjustedERA = Infinity;
                 }
             }
         }
