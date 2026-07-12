@@ -53,7 +53,8 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
         const teams = tData.stats[0].splits;
         for (let i = 0; i < current.length; i++) {
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA/inning count
-                if (stat === "avg" && players[i].team.id === teams[j].team.id){
+                if (stat === "avg"){
+                if (players[i].team.id === teams[j].team.id){
                         var minimumPlateAppearances = Math.round((teams[j].stat.gamesPlayed) * 3.1);
                         break;
                     }
@@ -62,7 +63,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                             break;
                     }
             }
-            if (stat === "avg" && players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
+            if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
                 if (league === "nl" && current[i].league.name === "NL" || league === "mlb" || league === "al" && current[i].league.name === "AL"){ //check if player is in selected league
                         players[i].adjustedAvg = players[i].stat.avg;
                         players[i].preAdjustmentAvg = " "; //does not add adjustment message
@@ -73,7 +74,6 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 }
             }
             else if (players[i].stat.plateAppearances < minimumPlateAppearances){ //adjustment for non-qualified players
-                if (stat === "avg"){
                         if (league === "nl" && current[i].league.name === "NL" || league === "mlb" || league === "al" && current[i].league.name === "AL"){ //check if player is in selected league
                                 let adjustedAvg = players[i].stat.hits / ((minimumPlateAppearances - players[i].stat.plateAppearances) + players[i].stat.atBats);
                                 adjustedAvg = Math.round(adjustedAvg * 1000) / 1000; //rounds to nearest thousandth
@@ -82,11 +82,11 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                                 players[i].adjustedAvg = adjustedAvg;
                                 players[i].preAdjustmentAvg = players[i].stat.avg; //original avg
                                 players[i].isQualified = false; //marks player as non-qualified so it appears as red
-                        }
                         else {
                                 players[i].adjustedAvg = -1; //set non-league players to -1 so they either appear as last or never appear at all
                         }
                 }
+            }
                 if (stat === "era"){
                 if (pitchers[i].stat.inningsPitched < minimumInnings){
                         const modifiedERTotal = pitchers[i].stat.earnedRuns + (minimumInnings - pitchers[i].stat.inningsPitched);
