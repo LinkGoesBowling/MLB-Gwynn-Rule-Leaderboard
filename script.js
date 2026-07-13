@@ -162,8 +162,8 @@ async function getData(season, currentStat){
         if (currentStat === "avg"){
                 var playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
                 ruleDescription.textContent = "Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title.";
-                var changeERATab = document.getElementById("eraTab"); //makes avg tab look selected
-                var changeAvgTab = document.getElementById("avgTab"); //makes ERA tab not selected
+                let changeERATab = document.getElementById("eraTab"); //makes avg tab look selected
+                let changeAvgTab = document.getElementById("avgTab"); //makes ERA tab not selected
                 changeAvgTab.style.backgroundColor = 'white';
                 changeAvgTab.style.border = '2px solid black';
                 changeERATab.style.backgroundColor = 'gray';
@@ -173,6 +173,8 @@ async function getData(season, currentStat){
         if (currentStat === "era"){
                 var playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
                 ruleDescription.textContent = "Unofficial rule: If a pitcher falls short of the IP requirement (same as amount of respective player's team's games played), 1 ER and 1 IP will be added for every inning missed.";
+                let changeERATab = document.getElementById("eraTab"); //makes avg tab look selected
+                let changeAvgTab = document.getElementById("avgTab"); //makes ERA tab not selected
                 changeAvgTab.style.backgroundColor = 'gray';
                 changeAvgTab.style.border = '1px solid black';
                 changeERATab.style.backgroundColor = 'white';
