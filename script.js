@@ -13,9 +13,7 @@ AVG Formula: H/AB
 Rounding: Nearest thousandth (ex. .343) 
 */
 //Note: Variables declared with var were for function scope. No, the JS police haven't arrived yet.
-let eraRank = 1;
-let avgRank = 1;
-let stat = "era";
+let stat = "avg";
 let colorNonQualifiedPlayers = true;
 let league = "mlb";
 let currentSeason = new Date().getFullYear();
@@ -170,6 +168,7 @@ async function getData(season, currentStat){
                 changeAvgTab.style.border = '2px solid black';
                 changeERATab.style.backgroundColor = 'gray';
                 changeERATab.style.border = '1px solid black';
+                stat = "avg";
         }
         if (currentStat === "era"){
                 var playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
@@ -178,6 +177,7 @@ async function getData(season, currentStat){
                 changeAvgTab.style.border = '1px solid black';
                 changeERATab.style.backgroundColor = 'white';
                 changeERATab.style.border = '2px solid black';
+                stat = "era";
         }
         const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=hitting&season=" + season + "&sportIds=1");
         const pData = await playerAPI.json();
@@ -187,16 +187,16 @@ async function getData(season, currentStat){
         for (let i = 0; i < players.length; i++) {
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA count
                 if (players[i].team.id === teams[j].team.id){
-                        if (stat === "avg"){
+                        if (currentStat === "avg"){
                                 var minimumPlateAppearances = Math.round((teams[j].stat.gamesPlayed) * 3.1);
                         }
-                        if (stat === "era"){
+                        if (currentStat === "era"){
                                 var minimumInnings = teams[j].stat.gamesPlayed
                         }
                         break;
             }
             }
-            if (stat === "avg"){
+            if (currentStat === "avg"){
                     if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
                         if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
                                 let adjustedAvg = players[i].stat.avg;
@@ -223,8 +223,7 @@ async function getData(season, currentStat){
                 }
             }
         }
-        }
-        if (stat === "era"){
+        if (currentStat === "era"){
                 if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
                 if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL" || league === "fl" && players[i].league.name === "FL"){ //check if player is in selected league
                         adjustedERA = (players[i].stat.era * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
@@ -251,11 +250,12 @@ async function getData(season, currentStat){
                 }
             }
         }
+        }
         for (let i = 0; i < players.length; i++){
-            if (stat === "avg"){
+            if (currentStat === "avg"){
                     players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             }
-            if (stat === "era"){
+            if (currentStat === "era"){
                     players.sort((a, b) => a.adjustedAvg - b.adjustedAvg);
             }
             for (let i = 0; i < playersShown; i++) {
@@ -294,11 +294,11 @@ async function getData(season, currentStat){
                         changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
                         changeRankBox.textContent = (i + 1);
                         changeNameBox.textContent = players[i].player.fullName;
-                        if (stat === "avg"){
+                        if (currentStat === "avg"){
                                 changeAvgBox.textContent = players[i].adjustedAvg;
                                 changePreAdjust.textContent = players[i].stat.avg;
                         }
-                        if (stat === "era"){
+                        if (currentStat === "era"){
                                 changeAvgBox.textContent = players[i].adjustedERA;
                                 changePreAdjust.textContent = players[i].stat.era;
                         }
