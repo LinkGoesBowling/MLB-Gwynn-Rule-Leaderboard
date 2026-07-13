@@ -159,17 +159,26 @@ async function getERAData(season) {
             }
         }
 }
-async function getData(season, currentStat){ //uses same structure as getERAData, but with avg
-        stat = "avg";
+async function getData(season, currentStat){
         const ruleDescription = document.getElementById("ruleDescription");
-        ruleDescription.textContent = "Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title."
-        let changeERATab = document.getElementById("eraTab"); //makes avg tab look selected
-        let changeAvgTab = document.getElementById("avgTab"); //makes ERA tab not selected
-        changeAvgTab.style.backgroundColor = 'white';
-        changeAvgTab.style.border = '2px solid black';
-        changeERATab.style.backgroundColor = 'gray';
-        changeERATab.style.border = '1px solid black';
-        const playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
+        if (currentStat === "avg"){
+                var playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
+                ruleDescription.textContent = "Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title.";
+                var changeERATab = document.getElementById("eraTab"); //makes avg tab look selected
+                var changeAvgTab = document.getElementById("avgTab"); //makes ERA tab not selected
+                changeAvgTab.style.backgroundColor = 'white';
+                changeAvgTab.style.border = '2px solid black';
+                changeERATab.style.backgroundColor = 'gray';
+                changeERATab.style.border = '1px solid black';
+        }
+        if (currentStat === "era"){
+                var playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
+                ruleDescription.textContent = "Unofficial rule: If a pitcher falls short of the IP requirement (same as amount of respective player's team's games played), 1 ER and 1 IP will be added for every inning missed.";
+                changeAvgTab.style.backgroundColor = 'gray';
+                changeAvgTab.style.border = '1px solid black';
+                changeERATab.style.backgroundColor = 'white';
+                changeERATab.style.border = '2px solid black';
+        }
         const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=hitting&season=" + season + "&sportIds=1");
         const pData = await playerAPI.json();
         const tData = await teamAPI.json();
@@ -178,21 +187,27 @@ async function getData(season, currentStat){ //uses same structure as getERAData
         for (let i = 0; i < players.length; i++) {
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA count
                 if (players[i].team.id === teams[j].team.id){
-                        var minimumPlateAppearances = Math.round((teams[j].stat.gamesPlayed) * 3.1);
+                        if (stat === "avg"){
+                                var minimumPlateAppearances = Math.round((teams[j].stat.gamesPlayed) * 3.1);
+                        }
+                        if (stat === "era"){
+                                var minimumInnings = teams[j].stat.gamesPlayed
+                        }
                         break;
             }
             }
-            if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
-                if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
-                        let adjustedAvg = players[i].stat.avg;
-                        players[i].adjustedAvg = adjustedAvg;
-                        players[i].preAdjustmentAvg = " "; //does not add adjustment message
-                        players[i].isQualified = true;
-                }
-                else {
-                        players[i].adjustedAvg = -1; //list non-league players last
-                }
-            }
+            if (stat === "avg"){
+                    if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
+                        if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
+                                let adjustedAvg = players[i].stat.avg;
+                                players[i].adjustedAvg = adjustedAvg;
+                                players[i].preAdjustmentAvg = " "; //does not add adjustment message
+                                players[i].isQualified = true;
+                        }
+                        else {
+                                players[i].adjustedAvg = -1; //list non-league players last
+                        }
+                    }
             else if (players[i].stat.plateAppearances < minimumPlateAppearances){ //adjustment for non-qualified players
                 if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
                         let adjustedAvg = players[i].stat.hits / ((minimumPlateAppearances - players[i].stat.plateAppearances) + players[i].stat.atBats);
@@ -208,8 +223,41 @@ async function getData(season, currentStat){ //uses same structure as getERAData
                 }
             }
         }
+        }
+        if (stat === "era"){
+                if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
+                if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL" || league === "fl" && players[i].league.name === "FL"){ //check if player is in selected league
+                        adjustedERA = (players[i].stat.era * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
+                        players[i].adjustedERA = adjustedERA; //still uses adjustedERA so they can be compared against non-qualifiers
+                        players[i].preAdjustmentERA = " ";
+                        players[i].isQualified = true;
+                }
+                else{
+                        players[i].adjustedERA = Infinity;
+                }
+            }
+            else if (players[i].stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
+                if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL" || league === "fl" && players[i].league.name === "FL"){ //check if player is in selected league
+                        const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
+                        let adjustedERA = (modifiedERTotal * 9) / minimumInnings;
+                        adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
+                        adjustedERA = (adjustedERA * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
+                        players[i].adjustedERA = adjustedERA;
+                        players[i].preAdjustmentERA = ", adjusted from: " + players[i].stat.era;
+                        players[i].isQualified = false;
+                    }
+                else{
+                        players[i].adjustedERA = Infinity;
+                }
+            }
+        }
         for (let i = 0; i < players.length; i++){
-            players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
+            if (stat === "avg"){
+                    players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
+            }
+            if (stat === "era"){
+                    players.sort((a, b) => a.adjustedAvg - b.adjustedAvg);
+            }
             for (let i = 0; i < playersShown; i++) {
                 const ol1 = document.getElementById('playerRanks');
                 const columnBoxes = document.getElementById('columnBoxes');
@@ -246,8 +294,14 @@ async function getData(season, currentStat){ //uses same structure as getERAData
                         changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
                         changeRankBox.textContent = (i + 1);
                         changeNameBox.textContent = players[i].player.fullName;
-                        changeAvgBox.textContent = players[i].adjustedAvg;
-                        changePreAdjust.textContent = players[i].stat.avg;
+                        if (stat === "avg"){
+                                changeAvgBox.textContent = players[i].adjustedAvg;
+                                changePreAdjust.textContent = players[i].stat.avg;
+                        }
+                        if (stat === "era"){
+                                changeAvgBox.textContent = players[i].adjustedERA;
+                                changePreAdjust.textContent = players[i].stat.era;
+                        }
                 }
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRank.style.color = "red"; //changes non-qualified players to red
@@ -273,7 +327,7 @@ function changeQualifiedPlayerRule(){
                         getData(currentSeason, "avg"); //retriggers getAvgData with year user inputted
                 }
                 if (stat === "era"){
-                        getERAData(currentSeason);
+                        getData(currentSeason, "era");
                 }
                 return;
         }
@@ -283,7 +337,7 @@ function changeQualifiedPlayerRule(){
                         getData(currentSeason, "avg") //retriggers getAvgData with current year or most recently entered season
                 }
                 if (stat === "era"){
-                        getERAData(currentSeason);
+                        getData(currentSeason, "era");
                 }
                 return;
         }
@@ -303,7 +357,7 @@ function switchToMLB(){
                 getData(currentSeason, "avg")
         }
         if (stat === "era"){
-                getERAData(currentSeason);
+                getData(currentSeason, "era");
         }
 }
 function switchToNL(){
@@ -321,7 +375,7 @@ function switchToNL(){
                 getData(currentSeason, "avg")
         }
         if (stat === "era"){
-                getERAData(currentSeason);
+                getData(currentSeason, "era");
         }
 }
 function switchToAL(){
@@ -339,7 +393,7 @@ function switchToAL(){
                 getData(currentSeason, "avg")
         }
         if (stat === "era"){
-                getERAData(currentSeason);
+                getData(currentSeason, "era");
         }
 }
 function switchToFL(){
@@ -360,7 +414,7 @@ function switchToFL(){
                 getData(currentSeason, "avg")
         }
         if (stat === "era"){
-                getERAData(currentSeason);
+                getData(currentSeason, "era");
         }
 }
 function processInput(){
@@ -370,7 +424,7 @@ function processInput(){
                 getData(currentSeason, "avg")
         }
         if (stat === "era"){
-                getERAData(currentSeason);
+                getData(currentSeason, "era");
         }
 }
 function showMorePlayers(){
@@ -379,6 +433,6 @@ function showMorePlayers(){
                 getData(currentSeason, "avg")
         }
         if (stat === "era"){
-                getERAData(currentSeason);
+                getData(currentSeason, "era");
         }
 }
