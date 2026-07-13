@@ -8,8 +8,8 @@
   <figcaption>AVG Ranks, 1996 season, NL</figcaption>
 </figure>
 <figure>
-  <img width="785" height="855" alt="image" src="https://github.com/user-attachments/assets/d9fff58e-a4ab-4973-be61-7fe84dd43934" />
-  <figcaption>ERA Ranks, 2026 season, both leagues as of Jul 9, 2026</figcaption>
+  <img width="759" height="823" alt="image" src="https://github.com/user-attachments/assets/fff676e7-629d-4393-986e-b7d838ff98b7" />
+  <figcaption>ERA Ranks, 2026 season, both leagues as of Jul 12, 2026</figcaption>
 </figure>
 <h3>📖 About</h2>
 <p>This is a solo project that I created to learn about APIs. It uses HTML, CSS, and JavaScript.</p>
